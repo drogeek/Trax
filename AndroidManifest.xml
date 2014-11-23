@@ -24,5 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MapActivity"/>
+        <service android:name=".BeaconTransmitter"/>
+        <receiver android:name=".BeaconReceiver"/>
     </application>
 </manifest>
