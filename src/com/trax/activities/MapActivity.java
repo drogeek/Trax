@@ -1,7 +1,8 @@
-package com.trax;
+package com.trax.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import com.trax.R;
 
 /**
  * Created by unautre on 23/11/14.

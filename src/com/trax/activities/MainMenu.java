@@ -1,9 +1,11 @@
-package com.trax;
+package com.trax.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import com.trax.R;
+import com.trax.networking.BeaconReceiver;
 
 public class MainMenu extends Activity {
     /**
@@ -13,6 +15,7 @@ public class MainMenu extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        startService(new Intent(this, BeaconReceiver.class));
     }
 
     public void show_map(View v){
