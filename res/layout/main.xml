@@ -11,6 +11,8 @@
             />
     <Button android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:onClick="show_map" />
+            android:onClick="show_map"
+            android:text="Lancer la carte"
+            />
 </LinearLayout>
 

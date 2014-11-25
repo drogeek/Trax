@@ -24,7 +24,7 @@ public class BeaconReceiver extends BroadcastReceiver {
         List PDUs = Arrays.asList((Object[]) data.get("pdus"));
         for (Object m : PDUs) {
             SmsMessage message = SmsMessage.createFromPdu((byte[]) m);
-            Log.d("TRAX", message.getMessageBody());
+
         }
     }
 }

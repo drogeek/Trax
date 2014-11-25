@@ -9,11 +9,25 @@ import android.telephony.SmsManager;
  * Created by unautre on 24/11/14.
  */
 public class Follower {
-    private String num, name;
+    private String num, name, couleur;
 
     public Follower(String num, String name) {
         this.num = num;
         this.name = name;
+    }
+
+    public String getCouleur() {
+        return couleur;
+    }
+
+    /* TODO ! */
+    static Follower fromNum(){
+        return null;
+    }
+
+    /* TODO ! */
+    static Follower fromName(){
+        return null;
     }
 
     public String getNum() {

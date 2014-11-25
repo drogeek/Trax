@@ -30,6 +30,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MapActivity"/>
+        <activity android:name=".activities.SelectionItineraire" android:label="selectionItineraire"/>
+        <activity android:name=".activities.SelectionContacts" android:label="selectionContacts"/>
         <service android:name=".networking.BeaconTransmitter"/>
     </application>
 </manifest>
