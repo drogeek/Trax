@@ -1,18 +1,19 @@
 package com.trax.mapelement;
 
-import com.google.android.gms.maps.model.LatLng;
+import android.location.Location;
 
 /**
  * Created by unautre on 25/11/14.
  */
 public class Marker {
-    LatLng position;
+    static float delta = 5;
 
-    public LatLng getPosition() {
+    Location position;
+
+    public Location getPosition() {
         return position;
     }
-
-    public void setPosition(LatLng position) {
+    public void setPosition(Location position) {
         this.position = position;
     }
 }
