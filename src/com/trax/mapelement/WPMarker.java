@@ -3,10 +3,10 @@ package com.trax.mapelement;
 /**
  * Created by unautre on 25/11/14.
  */
-public class Waypoint {
+public class WPMarker extends Marker {
     String name, desc;
 
-    public Waypoint(String name, String desc) {
+    public WPMarker(String name, String desc) {
         this.name = name;
         this.desc = desc;
     }
