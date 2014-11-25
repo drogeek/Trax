@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Trax</string>
+    <string name="welcome_message">Bienvenue dans Trax !</string>
+    <string name="contactpicker_title">Contacts</string>
+    <string name="recordmode">Mode Enregistrement</string>
+    <string name="pathwaymode">Mode Itinéraire</string>
+    <string name="next">Suivant</string>
+    <string name="URL_hint">Entrez l'URL...</string>
+    <string name="launch_contacts_view">Gérer les contacts</string>
+    <string name="copyrights">Créé par Jonathan-Désiré Guiennet et Dylan Werner-Meier</string>
 </resources>

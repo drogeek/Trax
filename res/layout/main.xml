@@ -7,12 +7,25 @@
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Hello World, MainMenu"
+            android:text="@string/welcome_message"
+            android:layout_weight="1"
             />
     <Button android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:onClick="show_map"
-            android:text="Lancer la carte"
+            android:onClick="launch_record"
+            android:text="@string/recordmode"
+            android:layout_weight="1"
+            />
+    <Button android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:onClick="launch_pathway"
+            android:text="@string/pathwaymode"
+            android:layout_weight="1"
+            />
+    <TextView android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/copyrights"
+              android:layout_weight="1"
             />
 </LinearLayout>
 

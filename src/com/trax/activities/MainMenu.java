@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import com.trax.R;
+import com.trax.modes.Session;
+import com.trax.modes.SessionEnregistrement;
+import com.trax.modes.SessionItinerant;
 import com.trax.networking.BeaconReceiver;
 
 public class MainMenu extends Activity {
@@ -18,7 +21,15 @@ public class MainMenu extends Activity {
         startService(new Intent(this, BeaconReceiver.class));
     }
 
-    public void show_map(View v){
-        startActivity(new Intent(this, MapActivity.class));
+    public void launch_record(View v){
+        /* TODO ! */
+        new SessionEnregistrement();
+        startActivity(new Intent(this, SelectionContacts.class));
+    }
+
+    public void launch_pathway(View v){
+        /* TODO ! */
+        new SessionItinerant();
+        startActivity(new Intent(this, SelectionItineraire.class));
     }
 }

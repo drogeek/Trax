@@ -21,6 +21,12 @@ public class BeaconReceiver extends BroadcastReceiver {
         Bundle data = intent.getExtras();
         if (data == null) return;
 
+        /* TODO:
+            lire le message si TRAX
+            parser le message
+            changer la location de l'user correspondant
+         */
+
         List PDUs = Arrays.asList((Object[]) data.get("pdus"));
         for (Object m : PDUs) {
             SmsMessage message = SmsMessage.createFromPdu((byte[]) m);

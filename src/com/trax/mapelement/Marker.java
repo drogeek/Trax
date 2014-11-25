@@ -6,8 +6,6 @@ import android.location.Location;
  * Created by unautre on 25/11/14.
  */
 public class Marker {
-    static float delta = 5;
-
     Location position;
 
     public Location getPosition() {
