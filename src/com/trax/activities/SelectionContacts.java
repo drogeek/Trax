@@ -24,7 +24,7 @@ public class SelectionContacts extends Activity {
 
     public void openContactList(View v){
         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-        startActivityForResult(intent.createChooser(intent,""),PICK_CONTACT);
+        startActivityForResult(intent,PICK_CONTACT);
     }
 
     @Override
