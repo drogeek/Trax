@@ -21,12 +21,12 @@ public class Follower {
     }
 
     /* TODO ! */
-    static Follower fromNum(){
+    static public Follower fromNum(String num){
         return null;
     }
 
     /* TODO ! */
-    static Follower fromName(){
+    static public Follower fromName(String name){
         return null;
     }
 

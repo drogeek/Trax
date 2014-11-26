@@ -23,10 +23,11 @@ public abstract class Session {
     public void removeFollower(Follower f){ followerList.remove(f); }
 
     /* C'est une classe singleton. */
-    private Session instance;
-    public void endInstance(){ this.instance = null; }
-    public void setInstance(Session instance) throws AlreadyLaunchedSessionException {
-        if(this.instance != null) throw new AlreadyLaunchedSessionException();
-        this.instance = instance;
+    static private Session instance;
+    static public Session getInstance(){ return instance; }
+    static public void endInstance(){ instance = null; }
+    static public void setInstance(Session instance) throws AlreadyLaunchedSessionException {
+        if(Session.instance != null) throw new AlreadyLaunchedSessionException();
+        Session.instance = instance;
     }
 }
