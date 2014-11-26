@@ -11,16 +11,17 @@ import java.util.List;
  */
 public abstract class Session {
     protected Session() throws AlreadyLaunchedSessionException {
-        followerList = new ArrayList<Follower>();
         setInstance(this);
     }
 
-    private List<Follower> followerList;
-    public List<Follower> getFollowerList() {
-        return followerList;
+    private List<Follower> pendingFollowerList = new ArrayList<Follower>();
+    private List<Follower> followerList = new ArrayList<Follower>();
+
+    public void addFollower(Follower f){ pendingFollowerList.add(f); }
+    public void removeFollower(Follower f){
+        followerList.remove(f);
+        pendingFollowerList.remove(f);
     }
-    public void addFollower(Follower f){ followerList.add(f); }
-    public void removeFollower(Follower f){ followerList.remove(f); }
 
     /* C'est une classe singleton. */
     static private Session instance;

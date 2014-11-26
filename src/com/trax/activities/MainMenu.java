@@ -21,6 +21,7 @@ public class MainMenu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         startService(new Intent(this, BeaconReceiver.class));
+        Session.endInstance();
     }
 
     public void launch_record(View v){
@@ -29,7 +30,7 @@ public class MainMenu extends Activity {
             new SessionEnregistrement();
             startActivity(new Intent(this, SelectionContacts.class));
         } catch (AlreadyLaunchedSessionException e) {
-            Log.e("TRAX", e.toString());
+            Log.e("DTRAX", e.toString());
         }
     }
 
@@ -39,7 +40,7 @@ public class MainMenu extends Activity {
             new SessionItinerant();
             startActivity(new Intent(this, SelectionItineraire.class));
         } catch (AlreadyLaunchedSessionException e) {
-            Log.e("TRAX", e.toString());
+            Log.e("DTRAX", e.toString());
         }
     }
 }
