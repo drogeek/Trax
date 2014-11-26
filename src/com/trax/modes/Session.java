@@ -10,8 +10,9 @@ import java.util.List;
  * Created by unautre on 23/11/14.
  */
 public abstract class Session {
-    protected Session(){
+    protected Session() throws AlreadyLaunchedSessionException {
         followerList = new ArrayList<Follower>();
+        setInstance(this);
     }
 
     private List<Follower> followerList;
