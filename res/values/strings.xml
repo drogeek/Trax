@@ -6,7 +6,7 @@
     <string name="recordmode">Mode Enregistrement</string>
     <string name="pathwaymode">Mode Itinéraire</string>
     <string name="next">Suivant</string>
-    <string name="URL_hint">Entrez l'URL...</string>
+    <string name="URL_hint">Entrez l\'URL…</string>
     <string name="launch_contacts_view">Gérer les contacts</string>
     <string name="copyrights">Créé par Jonathan-Désiré Guiennet et Dylan Werner-Meier</string>
 </resources>

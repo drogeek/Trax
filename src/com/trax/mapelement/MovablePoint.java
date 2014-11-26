@@ -6,7 +6,7 @@ import com.google.android.gms.location.LocationListener;
 /**
  * Created by unautre on 25/11/14.
  */
-public abstract class MovableMarker extends Marker implements LocationListener {
+public abstract class MovablePoint extends Point implements LocationListener {
     static float delta = 5;
 
     public abstract void onMovement();

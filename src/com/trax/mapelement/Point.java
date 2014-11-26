@@ -5,7 +5,7 @@ import android.location.Location;
 /**
  * Created by unautre on 25/11/14.
  */
-public class Marker {
+public class Point {
     Location position;
 
     public Location getPosition() {
