@@ -1,4 +1,4 @@
-package com.trax.mapelement;
+package com.trax.mapElement;
 
 import android.location.Location;
 import com.google.android.gms.location.LocationListener;

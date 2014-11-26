@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.provider.ContactsContract.PhoneLookup;
 import android.provider.ContactsContract.Profile;
 import android.util.Log;
 import android.view.View;
@@ -35,11 +33,12 @@ public class SelectionContacts extends Activity {
 
     public void openContactList(View v){
         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-        startActivityForResult(intent,PICK_CONTACT);
+        startActivityForResult(intent, PICK_CONTACT);
     }
 
     //On appelle la google map
     public void openMap(View v){
+        new MapActivity();
         startActivity(new Intent(this, MapActivity.class));
     }
 
@@ -55,6 +54,9 @@ public class SelectionContacts extends Activity {
             }else{
                 /* wtf ? */
             }
+        }
+        else {
+            Log.d("ErrorOnActivityResult", "requestCode isn't equal PICK_CONTACT");
         }
     }
 

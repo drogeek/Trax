@@ -1,4 +1,4 @@
-package com.trax.mapelement;
+package com.trax.mapElement;
 
 /**
  * Created by unautre on 25/11/14.
