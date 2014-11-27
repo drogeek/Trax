@@ -10,6 +10,7 @@ import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.telephony.SmsManager;
 import android.util.Log;
+import com.trax.Trax;
 
 /**
  * Created by unautre on 24/11/14.
@@ -44,7 +45,8 @@ public class Follower {
         return picture;
     }
 
-    public void sendSMS(String msg, Context context){
+    public void sendSMS(String msg){
+        Context context = Trax.getContext();
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(Intent.ACTION_SENDTO), 0);
         SmsManager.getDefault().sendTextMessage(num, null, msg, pendingIntent, pendingIntent);
     }

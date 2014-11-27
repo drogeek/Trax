@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <!-- Maps API needs OpenGL ES 2.0. -->
     <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:name=".Trax">
         <receiver android:name=".networking.BeaconReceiver" android:label="BeaconReceiver" android:exported="true">
             <intent-filter android:priority="10000">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />

@@ -1,5 +1,6 @@
 package com.trax.modes;
 
+import com.trax.Trax;
 import com.trax.errors.AlreadyLaunchedSessionException;
 import com.trax.networking.Follower;
 
@@ -10,6 +11,8 @@ import java.util.List;
  * Created by unautre on 23/11/14.
  */
 public abstract class Session {
+    protected static String BASE_INVITATION = "TRAX:1:INVITATION recu de l'application Trax (url) !";
+
     protected Session() throws AlreadyLaunchedSessionException {
         setInstance(this);
     }
@@ -17,7 +20,11 @@ public abstract class Session {
     private List<Follower> pendingFollowerList = new ArrayList<Follower>();
     private List<Follower> followerList = new ArrayList<Follower>();
 
-    public void addFollower(Follower f){ pendingFollowerList.add(f); }
+    public void addFollower(Follower f){
+        pendingFollowerList.add(f);
+        f.sendSMS(BASE_INVITATION);
+    }
+
     public void removeFollower(Follower f){
         followerList.remove(f);
         pendingFollowerList.remove(f);
