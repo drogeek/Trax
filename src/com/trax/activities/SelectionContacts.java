@@ -39,7 +39,6 @@ public class SelectionContacts extends Activity {
 
     //On appelle la google map
     public void openMap(View v){
-        new MapActivity();
         startActivity(new Intent(this, MapActivity.class));
     }
 

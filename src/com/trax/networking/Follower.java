@@ -32,6 +32,7 @@ public class Follower {
         /* TODO: gestion des couleurs */
     }
 
+    //Getters
     public String getCouleur() {
         return couleur;
     }
@@ -40,6 +41,9 @@ public class Follower {
     }
     public String getName() {
         return name;
+    }
+    public String getPicture() {
+        return picture;
     }
 
     public void sendSMS(String msg, Context context){
