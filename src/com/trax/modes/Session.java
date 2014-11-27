@@ -11,8 +11,6 @@ import java.util.List;
  * Created by unautre on 23/11/14.
  */
 public abstract class Session {
-    protected static String BASE_INVITATION = "TRAX:1:INVITATION recu de l'application Trax (url) !";
-
     protected Session() throws AlreadyLaunchedSessionException {
         setInstance(this);
     }
@@ -22,7 +20,18 @@ public abstract class Session {
 
     public void addFollower(Follower f){
         pendingFollowerList.add(f);
-        f.sendSMS(BASE_INVITATION);
+        f.sendSMS(Trax.BASE_INVITATION);
+    }
+    public void confirm(String num){
+        for(Follower f: pendingFollowerList){
+            if(f.getNum().equals(num)){
+                followerList.add(f);
+                pendingFollowerList.remove(f);
+                /* TODO: prévenir la vue */
+                return;
+            }
+        }
+        /* tiens, on a recu une confirmation bizarre ? TODO: error handling */
     }
 
     public void removeFollower(Follower f){

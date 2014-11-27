@@ -7,9 +7,13 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
+import com.trax.Trax;
+import com.trax.errors.ParseException;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 /**
  * Created by unautre on 23/11/14.
@@ -28,9 +32,38 @@ public class BeaconReceiver extends BroadcastReceiver {
          */
 
         List PDUs = Arrays.asList((Object[]) data.get("pdus"));
-        for (Object m : PDUs) {
+        /* for (Object m : PDUs) {
             SmsMessage message = SmsMessage.createFromPdu((byte[]) m);
+        } */
+        SmsMessage message = SmsMessage.createFromPdu((byte[])PDUs.get(0));
+        String num = message.getOriginatingAddress();
+        String msg = message.getMessageBody();
 
+        try {
+            /* On parse le message. */
+            Scanner sc = new Scanner(msg).useDelimiter(":");
+
+            if (!sc.next().equals(Trax.base_name)) return;
+
+            /* le message est bien pour nous, on l'intercepte. */
+            abortBroadcast();
+
+            if (!sc.next().equals(Integer.toString(Trax.protocol_version)))
+                throw new ParseException("protocol version mismatch.");
+
+            //sc.reset(); // API level 9 only
+            sc.useDelimiter(" ");
+            try { sc.skip(":"); }
+            catch (NoSuchElementException e){
+                throw new ParseException("parse error: ':' excepted.");
+            }
+
+            String verb = sc.next();
+            /* h(verb){
+                case "RESPONSE"
+            } */
+        }catch(ParseException e){
+            return;
         }
     }
 }

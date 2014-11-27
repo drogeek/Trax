@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.Location;
 import android.net.Uri;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
@@ -23,6 +24,7 @@ public class Follower {
     };
 
     private String num, name, couleur, picture;
+    private Location position;
 
     private Follower(){}
     public Follower(String num, String name) {
@@ -44,7 +46,12 @@ public class Follower {
     public String getPicture() {
         return picture;
     }
+    public Location getLocation(){ return position; }
 
+    //Setters
+    public void setLocation(Location l){ position = l; }
+
+    //methods
     public void sendSMS(String msg){
         Context context = Trax.getContext();
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(Intent.ACTION_SENDTO), 0);
