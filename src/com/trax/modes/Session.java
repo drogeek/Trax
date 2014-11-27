@@ -1,8 +1,13 @@
 package com.trax.modes;
 
+import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import com.trax.Trax;
 import com.trax.errors.AlreadyLaunchedSessionException;
+import com.trax.networking.BeaconReceiver;
+import com.trax.networking.BeaconTransmitter;
 import com.trax.networking.Follower;
 
 import java.util.ArrayList;
@@ -14,6 +19,7 @@ import java.util.List;
 public abstract class Session {
     protected Session() throws AlreadyLaunchedSessionException {
         setInstance(this);
+        Trax.getApplication().startService(new Intent(Trax.getContext(), BeaconTransmitter.class));
     }
 
     private List<Follower> pendingFollowerList = new ArrayList<Follower>();

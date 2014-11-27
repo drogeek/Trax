@@ -21,6 +21,9 @@ public class Trax extends Application {
     public static String MSG_CHAT = MSG_START + VERB.CHAT + "%s";
     public static int COORDS_FORMAT = Location.FORMAT_SECONDS;
 
+    public static long time_delta = 1000*60*5; // 5 minutes
+    public static long distance_delta = 20; // 20 metres
+
     private static Trax instance;
 
     @Override
@@ -32,4 +35,5 @@ public class Trax extends Application {
     public static Context getContext(){
         return instance;
     }
+    public static Application getApplication(){ return instance; }
 }
