@@ -20,7 +20,8 @@ public class Follower {
         Contacts.LOOKUP_KEY,
         Contacts.DISPLAY_NAME,
         Contacts.PHOTO_THUMBNAIL_URI,
-        Contacts.HAS_PHONE_NUMBER
+        Contacts.HAS_PHONE_NUMBER,
+        Phone.NUMBER
     };
 
     private String num, name, couleur, picture;
@@ -69,14 +70,13 @@ public class Follower {
 
         follower.picture = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI));
         follower.name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME));
+        follower.num = cursor.getString(cursor.getColumnIndex(Phone.NUMBER));
 
         String lookup_key = cursor.getString(cursor.getColumnIndex(Contacts.LOOKUP_KEY));
         String id = cursor.getString(cursor.getColumnIndex(Contacts._ID));
 
-        Uri data_phone = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, id);
-        cursor = contentResolver.query(data_phone, null, null, null, null);
 
-        Log.d("DTRAX", String.format("8=====D~~ %s: %s %s", follower.name, lookup_key, follower.picture));
+        Log.d("DTRAX", String.format("8=====D~~ %s: %s %s", follower.name, lookup_key, follower.num));
 
         return null;
     }
