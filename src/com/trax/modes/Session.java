@@ -20,7 +20,7 @@ public abstract class Session {
 
     public void addFollower(Follower f){
         pendingFollowerList.add(f);
-        f.sendSMS(Trax.BASE_INVITATION);
+        f.sendSMS(Trax.MSG_INVITATION);
     }
     public void confirm(String num){
         for(Follower f: pendingFollowerList){

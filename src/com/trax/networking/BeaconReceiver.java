@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.trax.Trax;
 import com.trax.errors.ParseException;
+import com.trax.modes.Session;
 
 import java.util.Arrays;
 import java.util.List;
@@ -58,10 +59,29 @@ public class BeaconReceiver extends BroadcastReceiver {
                 throw new ParseException("parse error: ':' excepted.");
             }
 
-            String verb = sc.next();
-            /* h(verb){
-                case "RESPONSE"
-            } */
+            Trax.VERB verb;
+            String str_verb = sc.next();
+            try{ verb = Trax.VERB.valueOf(str_verb); }
+            catch(IllegalArgumentException e){ throw new ParseException("Unknown verb " + str_verb); }
+
+            switch(verb){
+                case INVITATION:
+                    /* TODO: gérer l'invitation. Afficher une popup ? */
+                    break;
+                case ANSWER:
+                    Session.getInstance().confirm(num); break;
+                case POSITION:
+                    /* TODO: move the follower */
+                    break;
+                case POINTOFINTEREST:
+                    /* TODO: rajouter un WayPoint/POI */
+                    break;
+                case CHAT:
+                    /* TODO: afficher le message chat */
+                    break;
+                default:
+                    throw new ParseException("Unknown verb " + str_verb);
+            }
         }catch(ParseException e){
             return;
         }
