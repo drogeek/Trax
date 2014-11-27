@@ -4,8 +4,32 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <TextView android:layout_centerVertical="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/instructionContactListAccess" android:id="@+id/v_input"/>
-    <EditText android:inputType="phone" android:layout_width="130pt" android:layout_height="wrap_content" android:id="@+id/n_input" android:layout_below="@id/v_input"/>
-    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/contactListAccess" android:layout_toRightOf="@id/n_input" android:layout_below="@id/v_input" android:onClick="openContactList"/>
-    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_alignParentRight="true" android:text="@string/b_suivant" android:onClick="openMap"/>
+    <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/instructionContactListAccess"
+            android:id="@+id/v_input"
+            />
+    <EditText
+            android:inputType="phone"
+            android:layout_width="130pt"
+            android:layout_height="wrap_content"
+            android:id="@+id/n_input"
+            android:layout_below="@id/v_input"
+            />
+    <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/contactListAccess"
+            android:layout_toRightOf="@id/n_input"
+            android:layout_below="@id/v_input"
+            android:onClick="openContactList"
+            />
+    <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/b_suivant"
+            android:onClick="openMap"
+            />
 </RelativeLayout>
