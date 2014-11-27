@@ -70,7 +70,7 @@ public class Follower {
         follower.picture = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI));
         follower.name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME));
         follower.num = cursor.getString(cursor.getColumnIndex(Phone.NUMBER));
-
+        /* TODO: chopper le numéro de téléphone portable uniquement */
         Log.d("DTRAX", String.format("Contact trouvé: %s, %s", follower.name, follower.num));
 
         return follower;
