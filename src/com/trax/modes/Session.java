@@ -1,5 +1,6 @@
 package com.trax.modes;
 
+import android.location.Location;
 import com.trax.Trax;
 import com.trax.errors.AlreadyLaunchedSessionException;
 import com.trax.networking.Follower;
@@ -18,16 +19,22 @@ public abstract class Session {
     private List<Follower> pendingFollowerList = new ArrayList<Follower>();
     private List<Follower> followerList = new ArrayList<Follower>();
 
+    //Getters
+    public List<Follower> getFollowerList() {
+        return followerList;
+    }
+
     public void addFollower(Follower f){
         pendingFollowerList.add(f);
         f.sendSMS(Trax.MSG_INVITATION);
     }
-    public void confirm(String num){
+    public void confirm(String num, String answer){
         for(Follower f: pendingFollowerList){
             if(f.getNum().equals(num)){
-                followerList.add(f);
                 pendingFollowerList.remove(f);
-                /* TODO: prévenir la vue */
+                if(answer.equals("yes"))
+                    followerList.add(f);
+                /* TODO: prévenir la vue/l'user */
                 return;
             }
         }
@@ -37,6 +44,16 @@ public abstract class Session {
     public void removeFollower(Follower f){
         followerList.remove(f);
         pendingFollowerList.remove(f);
+    }
+
+    public void moveFollower(String num, Location location){
+        for(Follower f: followerList) {
+            if(f.getNum().equals(num)){
+                f.setLocation(location);
+                return;
+            }
+        }
+        /* TODO: error handling */
     }
 
     /* C'est une classe singleton. */

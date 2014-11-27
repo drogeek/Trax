@@ -3,6 +3,7 @@ package com.trax.networking;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
@@ -69,9 +70,14 @@ public class BeaconReceiver extends BroadcastReceiver {
                     /* TODO: gérer l'invitation. Afficher une popup ? */
                     break;
                 case ANSWER:
-                    Session.getInstance().confirm(num); break;
+                    String answer = sc.next();
+                    Session.getInstance().confirm(num, answer); break;
                 case POSITION:
-                    /* TODO: move the follower */
+                    Location location = new Location("unknown"); // provider
+                    location.setLatitude(Location.convert(sc.next()));
+                    location.setLongitude(Location.convert(sc.next()));
+                    location.setAltitude(Location.convert(sc.next()));
+                    Session.getInstance().moveFollower(num, location);
                     break;
                 case POINTOFINTEREST:
                     /* TODO: rajouter un WayPoint/POI */
