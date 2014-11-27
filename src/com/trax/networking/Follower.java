@@ -16,11 +16,8 @@ import android.util.Log;
  */
 public class Follower {
     static String[] contact_projection = new String[]{
-        Contacts._ID,
-        Contacts.LOOKUP_KEY,
         Contacts.DISPLAY_NAME,
         Contacts.PHOTO_THUMBNAIL_URI,
-        Contacts.HAS_PHONE_NUMBER,
         Phone.NUMBER
     };
 
@@ -72,12 +69,8 @@ public class Follower {
         follower.name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME));
         follower.num = cursor.getString(cursor.getColumnIndex(Phone.NUMBER));
 
-        String lookup_key = cursor.getString(cursor.getColumnIndex(Contacts.LOOKUP_KEY));
-        String id = cursor.getString(cursor.getColumnIndex(Contacts._ID));
+        Log.d("DTRAX", String.format("Contact trouvé: %s, %s", follower.name, follower.num));
 
-
-        Log.d("DTRAX", String.format("8=====D~~ %s: %s %s", follower.name, lookup_key, follower.num));
-
-        return null;
+        return follower;
     }
 }

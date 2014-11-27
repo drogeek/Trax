@@ -27,6 +27,7 @@ public class SelectionContacts extends Activity {
 
     public void openContactList(View v){
         Intent intent = new Intent(Intent.ACTION_PICK, Contacts.CONTENT_URI);
+        intent.setType(CommonDataKinds.Phone.CONTENT_TYPE);
         startActivityForResult(intent, PICK_CONTACT);
     }
 
