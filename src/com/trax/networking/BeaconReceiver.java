@@ -68,6 +68,7 @@ public class BeaconReceiver extends BroadcastReceiver {
             switch(verb){
                 case INVITATION:
                     /* TODO: gérer l'invitation. Afficher une popup ? */
+                    Log.d("DTRAX","Invitation reçue de "+num);
                     break;
                 case ANSWER:
                     String answer = sc.next();
