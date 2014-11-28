@@ -34,10 +34,12 @@ public class BeaconReceiver extends BroadcastReceiver {
          */
 
         List PDUs = Arrays.asList((Object[]) data.get("pdus"));
-        /* for (Object m : PDUs) {
-            SmsMessage message = SmsMessage.createFromPdu((byte[]) m);
-        } */
-        SmsMessage message = SmsMessage.createFromPdu((byte[])PDUs.get(0));
+        for (Object m : PDUs) {
+            parseMessage(SmsMessage.createFromPdu((byte[])m));
+        }
+    }
+
+    public void parseMessage(SmsMessage message){
         String num = message.getOriginatingAddress();
         String msg = message.getMessageBody();
 
