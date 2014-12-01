@@ -16,5 +16,6 @@
     <!--strings pour l'ajout de contacts-->
     <string name="contactListAccess">...</string>
     <string name="instructionContactListAccess">Numéro de téléphone:</string>
-
+    <string name="accept_invitation">Accepter</string>
+    <string name="refuse_invitation">Refuser</string>
 </resources>

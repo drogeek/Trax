@@ -1,14 +1,19 @@
 package com.trax.networking;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
+import com.trax.R;
 import com.trax.Trax;
+import com.trax.activities.MainMenu;
 import com.trax.errors.ParseException;
 import com.trax.modes.Session;
 
@@ -22,8 +27,22 @@ import java.util.Scanner;
  * Cette classe capte les messages des autres usagers et les traite.
  */
 public class BeaconReceiver extends BroadcastReceiver {
+    private static BeaconReceiver instance;
+    private static Context context;
+    public BeaconReceiver() {
+        super();
+        Log.d("TRAX", "BeaconReceiver créé.");
+        instance = this;
+    }
+
+    static public BeaconReceiver getInstance() {
+        return instance;
+    }
+    static public Context getContext(){ return context; }
+
     @Override
     public void onReceive(Context context, Intent intent) {
+        this.context = context;
         Bundle data = intent.getExtras();
         if (data == null) return;
 
@@ -43,11 +62,15 @@ public class BeaconReceiver extends BroadcastReceiver {
         String num = message.getOriginatingAddress();
         String msg = message.getMessageBody();
 
+        Log.d("TRAX", "Message recu de "+num);
+
         try {
             /* On parse le message. */
             Scanner sc = new Scanner(msg).useDelimiter(":");
-
-            if (!sc.next().equals(Trax.base_name)) return;
+            String head = sc.next();
+            Log.d("TRAX", "Header: " + head);
+            if (!head.equals(Trax.base_name)) return;
+            Log.d("TRAX", "C'est un message TRAX !");
 
             /* le message est bien pour nous, on l'intercepte. */
             abortBroadcast();
@@ -71,10 +94,31 @@ public class BeaconReceiver extends BroadcastReceiver {
                 case INVITATION:
                     /* TODO: gérer l'invitation. Afficher une popup ? */
                     Log.d("DTRAX","Invitation reçue de "+num);
+                    Follower f = Follower.fromNum(num, getContext().getContentResolver());
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BeaconReceiver.getContext());
+                    dialogBuilder.setIcon(android.R.drawable.ic_dialog_alert);
+                    dialogBuilder.setMessage(String.format("Invitation Trax recue de %s (%s)", f.getName(), f.getNum()));
+                    dialogBuilder.setPositiveButton(R.string.accept_invitation, new DialogInterface.OnClickListener() {
+                                       @Override
+                                       public void onClick(DialogInterface dialog, int which) {
+                                           Intent intent = new Intent();
+                                           intent.setClass(BeaconReceiver.getContext(), MainMenu.class);
+                                           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                           BeaconReceiver.getContext().startActivity(intent);
+                                       }
+                                   }
+                    );
+                    dialogBuilder.setNegativeButton(R.string.refuse_invitation, null);
+                    AlertDialog dialog = dialogBuilder.create();
+                    dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    dialog.show();
                     break;
                 case ANSWER:
                     String answer = sc.next();
-                    Session.getInstance().confirm(num, answer); break;
+                    Log.d("DTRAX", String.format("Réponse recue de %s: %s", num, answer));
+                    Session.getInstance().confirm(num, answer);
+                    Log.d("DTRAX", Session.getInstance().getFollowerList().get(0).toString());
+                    break;
                 case POSITION:
                     Location location = new Location("unknown"); // provider
                     location.setLatitude(Location.convert(sc.next()));
@@ -92,7 +136,7 @@ public class BeaconReceiver extends BroadcastReceiver {
                     throw new ParseException("Unknown verb " + str_verb);
             }
         }catch(ParseException e){
-            return;
+            Log.e("TRAX", "Parse Error: " + e.toString());
         }
     }
 }

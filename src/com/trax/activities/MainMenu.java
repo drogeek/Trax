@@ -20,8 +20,13 @@ public class MainMenu extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        Log.d("TRAX", "demande de lancement du BeaconReceiver");
         startService(new Intent(this, BeaconReceiver.class));
         Session.endInstance();
+
+        /* est-ce qu'on a été appelé suite à une invitation ? TODO */
+        Intent intent = getIntent();
+        /* TODO: gérer le cas avec itinéraire */
     }
 
     public void launch_record(View v){

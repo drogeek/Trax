@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.telephony.SmsManager;
@@ -50,6 +51,7 @@ public class Follower {
 
     //Setters
     public void setLocation(Location l){ position = l; }
+    public void setName(String name){ this.name = name;}
 
     //methods
     public void sendSMS(String msg){
@@ -59,8 +61,19 @@ public class Follower {
     }
 
     /* Factories */
-    static public Follower fromNum(String num){
-        return null;
+    static public Follower fromNum(String num, ContentResolver cr){
+        Follower f = new Follower("Inconnu", num);
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(num));
+        Cursor cursor = cr.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+        if (cursor == null) return f;
+        if(cursor.moveToFirst())
+            f.setName(cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)));
+
+        if(cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+
+        return f;
     }
 
     static public Follower fromName(String name){
