@@ -15,10 +15,12 @@ public class Itineraire {
 
     public static Itineraire fromString(String s){
         /* TODO */
+        return null;
     }
 
     public static String serialize(Itineraire itineraire){
         /* TODO */
+        return null;
     }
 
     public PolylineOptions toMap(){
