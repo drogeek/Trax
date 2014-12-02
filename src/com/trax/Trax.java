@@ -1,8 +1,15 @@
 package com.trax;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
+import android.view.WindowManager;
+import com.trax.activities.MainMenu;
+import com.trax.networking.BeaconReceiver;
+import com.trax.networking.Follower;
 
 /**
  * Created by unautre on 27/11/14.
@@ -35,5 +42,35 @@ public class Trax extends Application {
     public static Context getContext(){
         return instance;
     }
-    public static Application getApplication(){ return instance; }
+    public static Trax getApplication(){ return instance; }
+
+    public static enum INVITATION_CHOICE_ENUM {PopupDialog, Notification};
+    public static INVITATION_CHOICE_ENUM INVITATION_CHOICE = INVITATION_CHOICE_ENUM.PopupDialog;
+
+    public void show_invitation(Follower f){
+        switch(INVITATION_CHOICE) {
+            case PopupDialog:
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BeaconReceiver.getContext());
+                dialogBuilder.setIcon(android.R.drawable.ic_dialog_alert);
+                dialogBuilder.setMessage(String.format("Invitation Trax recue de %s (%s)", f.getName(), f.getNum()));
+                dialogBuilder.setPositiveButton(R.string.accept_invitation, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent();
+                                intent.setClass(BeaconReceiver.getContext(), MainMenu.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                BeaconReceiver.getContext().startActivity(intent);
+                            }
+                        }
+                );
+                dialogBuilder.setNegativeButton(R.string.refuse_invitation, null);
+                AlertDialog dialog = dialogBuilder.create();
+                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                dialog.show();
+                break;
+            case Notification:
+                /* TODO */
+                break;
+        }
+    }
 }

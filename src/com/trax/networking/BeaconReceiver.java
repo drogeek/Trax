@@ -95,23 +95,7 @@ public class BeaconReceiver extends BroadcastReceiver {
                     /* TODO: gérer l'invitation. Afficher une popup ? */
                     Log.d("DTRAX","Invitation reçue de "+num);
                     Follower f = Follower.fromNum(num, getContext().getContentResolver());
-                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BeaconReceiver.getContext());
-                    dialogBuilder.setIcon(android.R.drawable.ic_dialog_alert);
-                    dialogBuilder.setMessage(String.format("Invitation Trax recue de %s (%s)", f.getName(), f.getNum()));
-                    dialogBuilder.setPositiveButton(R.string.accept_invitation, new DialogInterface.OnClickListener() {
-                                       @Override
-                                       public void onClick(DialogInterface dialog, int which) {
-                                           Intent intent = new Intent();
-                                           intent.setClass(BeaconReceiver.getContext(), MainMenu.class);
-                                           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                           BeaconReceiver.getContext().startActivity(intent);
-                                       }
-                                   }
-                    );
-                    dialogBuilder.setNegativeButton(R.string.refuse_invitation, null);
-                    AlertDialog dialog = dialogBuilder.create();
-                    dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                    dialog.show();
+                    Trax.getApplication().show_invitation(f);
                     break;
                 case ANSWER:
                     String answer = sc.next();
