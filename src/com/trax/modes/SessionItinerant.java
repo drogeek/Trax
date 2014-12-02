@@ -9,4 +9,9 @@ public class SessionItinerant extends Session {
     public SessionItinerant() throws AlreadyLaunchedSessionException {
         super();
     }
+
+    public SessionItinerant(String url) throws AlreadyLaunchedSessionException {
+        super();
+
+    }
 }

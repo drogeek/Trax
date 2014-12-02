@@ -11,6 +11,7 @@ import com.trax.modes.Session;
 import com.trax.modes.SessionEnregistrement;
 import com.trax.modes.SessionItinerant;
 import com.trax.networking.BeaconReceiver;
+import com.trax.networking.Follower;
 
 public class MainMenu extends Activity {
     /**
@@ -19,14 +20,31 @@ public class MainMenu extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        Log.d("TRAX", "demande de lancement du BeaconReceiver");
-        startService(new Intent(this, BeaconReceiver.class));
         Session.endInstance();
 
-        /* est-ce qu'on a été appelé suite à une invitation ? TODO */
         Intent intent = getIntent();
-        /* TODO: gérer le cas avec itinéraire */
+        Bundle data = intent.getExtras();
+        String num = null;
+
+        if(data != null) num = data.getString("num");
+
+        if(num != null){
+            /* si on arrive ici par une invitation */
+            String itineraire = data.getString("url");
+            try{
+                if(itineraire != null)
+                    new SessionItinerant(itineraire);
+                else
+                    new SessionEnregistrement();
+            }catch(AlreadyLaunchedSessionException e){
+                Log.e("TRAX", "WTF ? Session déjà lancée.");
+            }
+            Session.getInstance().addFollower(Follower.fromNum(num, getContentResolver()));
+            startActivity(new Intent(this, MapActivity.class));
+        }else {
+            setContentView(R.layout.main);
+            Log.d("TRAX", "demande de lancement du BeaconReceiver");
+        }
     }
 
     public void launch_record(View v){
@@ -48,4 +66,6 @@ public class MainMenu extends Activity {
             Log.e("DTRAX", e.toString());
         }
     }
+
+
 }
