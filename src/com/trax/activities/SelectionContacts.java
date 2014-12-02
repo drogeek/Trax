@@ -9,7 +9,9 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.*;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import com.trax.R;
+import com.trax.Trax;
 import com.trax.modes.Session;
 import com.trax.networking.Follower;
 
@@ -18,11 +20,14 @@ import com.trax.networking.Follower;
  */
 public class SelectionContacts extends Activity {
     int PICK_CONTACT = 1;
+    ListView listView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selection_contacts);
+        listView = (ListView)findViewById(R.id.lv_Contact);
+        listView.setAdapter(new ContactAdapter(this,Session.getInstance().getPendingFollowerList()));
     }
 
     public void openContactList(View v){

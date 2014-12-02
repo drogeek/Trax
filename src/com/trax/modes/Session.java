@@ -30,6 +30,10 @@ public abstract class Session {
         return followerList;
     }
 
+    public List<Follower> getPendingFollowerList() {
+        return pendingFollowerList;
+    }
+
     public void addFollower(Follower f){
         pendingFollowerList.add(f);
         f.sendSMS(Trax.MSG_INVITATION);
