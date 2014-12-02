@@ -42,6 +42,7 @@ public class BeaconTransmitter extends Service implements LocationListener {
                     Location.convert(location.getAltitude(), Trax.COORDS_FORMAT)
             ));
         }
+        Session.getInstance().setOwnPosition(location);
     }
 
     @Override

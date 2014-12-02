@@ -1,6 +1,8 @@
 package com.trax.mapElement;
 
 import android.location.Location;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,4 +12,20 @@ import java.util.List;
  */
 public class Itineraire {
     List<Location> self = new ArrayList<Location>();
+
+    public static Itineraire fromString(String s){
+        /* TODO */
+    }
+
+    public static String serialize(Itineraire itineraire){
+        /* TODO */
+    }
+
+    public PolylineOptions toMap(){
+        PolylineOptions ret = new PolylineOptions();
+        for(Location l: self){
+            ret.add(new LatLng(l.getLatitude(), l.getLongitude()));
+        }
+        return ret;
+    }
 }

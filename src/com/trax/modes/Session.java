@@ -70,4 +70,6 @@ public abstract class Session {
         if(Session.instance != null) throw new AlreadyLaunchedSessionException();
         Session.instance = instance;
     }
+
+    public void setOwnPosition(Location l){}
 }

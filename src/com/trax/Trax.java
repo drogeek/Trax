@@ -47,7 +47,7 @@ public class Trax extends Application {
     public static enum INVITATION_CHOICE_ENUM {PopupDialog, Notification};
     public static INVITATION_CHOICE_ENUM INVITATION_CHOICE = INVITATION_CHOICE_ENUM.PopupDialog;
 
-    public void show_invitation(Follower f){
+    public void show_invitation(final Follower f){
         switch(INVITATION_CHOICE) {
             case PopupDialog:
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BeaconReceiver.getContext());
@@ -58,6 +58,8 @@ public class Trax extends Application {
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent();
                                 intent.setClass(BeaconReceiver.getContext(), MainMenu.class);
+                                intent.putExtra("num", f.getNum());
+                                /* TODO: si l'invitation contient un itineraire, l'ajouter dans l'intent. */
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 BeaconReceiver.getContext().startActivity(intent);
                             }
