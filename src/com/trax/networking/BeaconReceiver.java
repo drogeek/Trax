@@ -92,16 +92,23 @@ public class BeaconReceiver extends BroadcastReceiver {
 
             switch(verb){
                 case INVITATION:
-                    /* TODO: gérer l'invitation. Afficher une popup ? */
                     Log.d("DTRAX","Invitation reçue de "+num);
                     Follower f = Follower.fromNum(num, getContext().getContentResolver());
-                    Trax.getApplication().show_invitation(f);
+                    int beginURL = msg.indexOf("trax://");
+                    String URL = null;
+                    if(beginURL != -1){
+                        int endURL = msg.indexOf(" ", beginURL);
+                        URL = (endURL != -1) ?
+                                msg.substring(beginURL, endURL) :
+                                msg.substring(beginURL);
+                    }
+                    Log.d("TRAX", "Invitation avec itineraire: " + URL);
+                    Trax.getApplication().show_invitation(f, URL);
                     break;
                 case ANSWER:
                     String answer = sc.next();
                     Log.d("DTRAX", String.format("Réponse recue de %s: %s", num, answer));
                     Session.getInstance().confirm(num, answer);
-                    Log.d("DTRAX", Session.getInstance().getFollowerList().get(0).toString());
                     break;
                 case POSITION:
                     Location location = new Location("unknown"); // provider

@@ -1,4 +1,4 @@
-package com.trax.activities;
+package com.trax.tools;
 
 import android.content.Context;
 import android.net.Uri;
@@ -18,23 +18,19 @@ import java.util.List;
 /**
  * Created by toor on 27/11/14.
  */
-public class ContactAdapter extends ArrayAdapter<Follower> {
-
+public class ContactAdapter extends TableAdapter<String, Follower> {
     private Context context;
-    private List<Follower> followers;
 
-    public ContactAdapter(Context context, List<Follower> followers) {
-        super(context, R.layout.row_contact);
+    public ContactAdapter(Context context, ObservableTable<String, Follower> table) {
+        super(table);
         this.context = context;
-        this.followers = followers;
         Log.d("DTRAX","Entered ContactAdapter");
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        Follower currentFollower = getItem(position);
+        Follower currentFollower = getNativeItem(position);
         Log.d("DTRAX", "Entered getView from ContactAdapter");
 
         View view = inflater.inflate(R.layout.row_contact, parent, false);
@@ -45,15 +41,5 @@ public class ContactAdapter extends ArrayAdapter<Follower> {
         textView.setText(currentFollower.getName());
         //imageButton à ajouter
         return view;
-    }
-
-    @Override
-    public int getCount() {
-        return followers.size();
-    }
-
-    @Override
-    public Follower getItem(int position) {
-        return followers.get(position);
     }
 }

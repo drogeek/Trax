@@ -2,19 +2,16 @@ package com.trax.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.ContactsContract.*;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ListView;
 import com.trax.R;
-import com.trax.Trax;
 import com.trax.modes.Session;
 import com.trax.networking.Follower;
+import com.trax.tools.ContactAdapter;
 
 /**
  * Created by unautre on 25/11/14.
@@ -38,9 +35,9 @@ public class SelectionContacts extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selection_contacts);
-        listView = (ListView)findViewById(R.id.lv_Contact);
-        listView.setAdapter(new ContactAdapter(this,Session.getInstance().getPendingFollowerList()));
 
+        listView = (ListView)findViewById(R.id.lv_Contact);
+        listView.setAdapter(new ContactAdapter(this,Session.getInstance().getPendingFollowers()));
     }
 
     public void openContactList(View v){
