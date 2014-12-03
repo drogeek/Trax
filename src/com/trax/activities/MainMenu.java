@@ -20,7 +20,6 @@ public class MainMenu extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Session.endInstance();
 
         Intent intent = getIntent();
         Bundle data = intent.getExtras();
@@ -67,5 +66,9 @@ public class MainMenu extends Activity {
         }
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Session.endInstance();
+    }
 }
