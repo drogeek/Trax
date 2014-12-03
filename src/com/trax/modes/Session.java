@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
+import android.widget.ArrayAdapter;
 import com.trax.Trax;
+import com.trax.activities.ContactAdapter;
+import com.trax.activities.SelectionContacts;
 import com.trax.errors.AlreadyLaunchedSessionException;
 import com.trax.networking.BeaconReceiver;
 import com.trax.networking.BeaconTransmitter;
@@ -37,7 +40,9 @@ public abstract class Session {
     public void addFollower(Follower f){
         pendingFollowerList.add(f);
         f.sendSMS(Trax.MSG_INVITATION);
+//        ((ArrayAdapter)SelectionContacts.getInstance().getAdapterPendingFollower()).notifyDataSetChanged();
     }
+
     public void confirm(String num, String answer){
         for(Follower f: pendingFollowerList){
             if(f.getNum().equals(num)){
@@ -54,6 +59,7 @@ public abstract class Session {
     public void removeFollower(Follower f){
         followerList.remove(f);
         pendingFollowerList.remove(f);
+//        ((ArrayAdapter)SelectionContacts.getInstance().getAdapterPendingFollower()).notifyDataSetChanged();
     }
 
     public void moveFollower(String num, Location location){

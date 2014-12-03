@@ -2,6 +2,7 @@ package com.trax.activities;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class ContactAdapter extends ArrayAdapter<Follower> {
         super(context, R.layout.row_contact);
         this.context = context;
         this.followers = followers;
+        Log.d("DTRAX","Entered ContactAdapter");
     }
 
     @Override
@@ -33,6 +35,7 @@ public class ContactAdapter extends ArrayAdapter<Follower> {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         Follower currentFollower = getItem(position);
+        Log.d("DTRAX", "Entered getView from ContactAdapter");
 
         View view = inflater.inflate(R.layout.row_contact, parent, false);
         ImageView imageView = (ImageView)view.findViewById(R.id.img_Contact);
@@ -42,5 +45,15 @@ public class ContactAdapter extends ArrayAdapter<Follower> {
         textView.setText(currentFollower.getName());
         //imageButton à ajouter
         return view;
+    }
+
+    @Override
+    public int getCount() {
+        return followers.size();
+    }
+
+    @Override
+    public Follower getItem(int position) {
+        return followers.get(position);
     }
 }
