@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
+import android.support.annotation.Nullable;
 import android.view.WindowManager;
 import com.trax.activities.MainMenu;
 import com.trax.networking.BeaconReceiver;
@@ -47,7 +48,7 @@ public class Trax extends Application {
     public static enum INVITATION_CHOICE_ENUM {PopupDialog, Notification};
     public static INVITATION_CHOICE_ENUM INVITATION_CHOICE = INVITATION_CHOICE_ENUM.PopupDialog;
 
-    public void show_invitation(final Follower f){
+    public void show_invitation(final Follower f, @Nullable String url){
         switch(INVITATION_CHOICE) {
             case PopupDialog:
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BeaconReceiver.getContext());

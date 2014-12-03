@@ -1,19 +1,15 @@
 package com.trax.modes;
 
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationManager;
-import android.widget.ArrayAdapter;
 import com.trax.Trax;
-import com.trax.activities.ContactAdapter;
-import com.trax.activities.SelectionContacts;
 import com.trax.errors.AlreadyLaunchedSessionException;
-import com.trax.networking.BeaconReceiver;
 import com.trax.networking.BeaconTransmitter;
 import com.trax.networking.Follower;
+import com.trax.tools.ObservableTable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -25,50 +21,50 @@ public abstract class Session {
         Trax.getApplication().startService(new Intent(Trax.getContext(), BeaconTransmitter.class));
     }
 
-    private List<Follower> pendingFollowerList = new ArrayList<Follower>();
-    private List<Follower> followerList = new ArrayList<Follower>();
+    private ObservableTable<String, Follower> pendingFollowers;
+    private ObservableTable<String, Follower> followers;
+    private ObservableTable<String, Follower> invitations;
 
     //Getters
-    public List<Follower> getFollowerList() {
-        return followerList;
+    public Collection<Follower> getFollowerList() {
+        return followers.values();
     }
+    public Collection<Follower> getPendingFollowerList() {
+        return pendingFollowers.values();
+    }
+    public Collection<Follower> getInvitationsList(){ return invitations.values(); }
 
-    public List<Follower> getPendingFollowerList() {
-        return pendingFollowerList;
+    public ObservableTable<String, Follower> getPendingFollowers() {
+        return pendingFollowers;
+    }
+    public ObservableTable<String, Follower> getFollowers() {
+        return followers;
+    }
+    public ObservableTable<String, Follower> getInvitations() {
+        return invitations;
     }
 
     public void addFollower(Follower f){
-        pendingFollowerList.add(f);
+        pendingFollowers.put(f.getNum(), f);
         f.sendSMS(Trax.MSG_INVITATION);
-//        ((ArrayAdapter)SelectionContacts.getInstance().getAdapterPendingFollower()).notifyDataSetChanged();
     }
 
     public void confirm(String num, String answer){
-        for(Follower f: pendingFollowerList){
-            if(f.getNum().equals(num)){
-                pendingFollowerList.remove(f);
-                if(answer.equals("yes"))
-                    followerList.add(f);
-                /* TODO: prévenir la vue/l'user */
-                return;
-            }
-        }
-        /* tiens, on a recu une confirmation bizarre ? TODO: error handling */
+        Follower f = pendingFollowers.get(num);
+        pendingFollowers.remove(num);
+        if(answer.equals("yes"))
+            followers.put(num, f);
+        /* TODO: error handling */
     }
 
     public void removeFollower(Follower f){
-        followerList.remove(f);
-        pendingFollowerList.remove(f);
-//        ((ArrayAdapter)SelectionContacts.getInstance().getAdapterPendingFollower()).notifyDataSetChanged();
+        followers.remove(f.getNum());
+        pendingFollowers.remove(f.getNum());
+        invitations.remove(f.getNum());
     }
 
     public void moveFollower(String num, Location location){
-        for(Follower f: followerList) {
-            if(f.getNum().equals(num)){
-                f.setLocation(location);
-                return;
-            }
-        }
+        followers.get(num).setLocation(location);
         /* TODO: error handling */
     }
 
