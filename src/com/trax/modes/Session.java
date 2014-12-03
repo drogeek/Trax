@@ -18,12 +18,12 @@ import java.util.List;
 public abstract class Session {
     protected Session() throws AlreadyLaunchedSessionException {
         setInstance(this);
-        Trax.getApplication().startService(new Intent(Trax.getContext(), BeaconTransmitter.class));
+        // Trax.getApplication().startService(new Intent(Trax.getContext(), BeaconTransmitter.class));
     }
 
-    private ObservableTable<String, Follower> pendingFollowers;
-    private ObservableTable<String, Follower> followers;
-    private ObservableTable<String, Follower> invitations;
+    private ObservableTable<String, Follower> pendingFollowers = new ObservableTable<String, Follower>();
+    private ObservableTable<String, Follower> followers = new ObservableTable<String, Follower>();
+    private ObservableTable<String, Follower> invitations = new ObservableTable<String, Follower>();
 
     //Getters
     public Collection<Follower> getFollowerList() {

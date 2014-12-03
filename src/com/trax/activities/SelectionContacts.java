@@ -12,6 +12,7 @@ import com.trax.R;
 import com.trax.modes.Session;
 import com.trax.networking.Follower;
 import com.trax.tools.ContactAdapter;
+import com.trax.tools.ObservableTable;
 
 /**
  * Created by unautre on 25/11/14.
@@ -20,24 +21,15 @@ public class SelectionContacts extends Activity {
     int PICK_CONTACT = 1;
     ListView listView;
 
-//    private static SelectionContacts instance = null;
-//
-//    private SelectionContacts(){
-//        super();
-//    }
-//
-//    public static SelectionContacts getInstance(){
-//            if(instance == null) instance = new SelectionContacts();
-//            return instance;
-//    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selection_contacts);
 
         listView = (ListView)findViewById(R.id.lv_Contact);
-        listView.setAdapter(new ContactAdapter(this,Session.getInstance().getPendingFollowers()));
+        ObservableTable<String, Follower> pending = Session.getInstance().getPendingFollowers();
+        ContactAdapter adapter = new ContactAdapter(this, pending);
+        listView.setAdapter(adapter);
     }
 
     public void openContactList(View v){
@@ -55,14 +47,8 @@ public class SelectionContacts extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if(requestCode == PICK_CONTACT && resultCode == RESULT_OK)
             Session.getInstance().addFollower(Follower.fromUri(data.getData(), getContentResolver()));
-        //Juste pour tester si la liste grandie
-        Log.d("DTRAX",Integer.valueOf(Session.getInstance().getPendingFollowerList().size()).toString());
-        Log.d("DTRAX",Integer.valueOf(listView.getAdapter().getCount()).toString());
-    }
-
-    public Adapter getAdapterPendingFollower(){
-        return listView.getAdapter();
     }
 }

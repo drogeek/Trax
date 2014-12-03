@@ -24,20 +24,19 @@ public class ContactAdapter extends TableAdapter<String, Follower> {
     public ContactAdapter(Context context, ObservableTable<String, Follower> table) {
         super(table);
         this.context = context;
-        Log.d("DTRAX","Entered ContactAdapter");
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         Follower currentFollower = getNativeItem(position);
-        Log.d("DTRAX", "Entered getView from ContactAdapter");
 
         View view = inflater.inflate(R.layout.row_contact, parent, false);
         ImageView imageView = (ImageView)view.findViewById(R.id.img_Contact);
         TextView textView = (TextView)view.findViewById(R.id.t_Contact);
         ImageButton imageButton = (ImageButton)view.findViewById(R.id.b_Contact);
-        imageView.setImageURI(Uri.parse(currentFollower.getPicture()));
+        // attention: l'URI peut être nulle.
+        //imageView.setImageURI(Uri.parse(currentFollower.getPicture()));
         textView.setText(currentFollower.getName());
         //imageButton à ajouter
         return view;

@@ -1,6 +1,7 @@
 package com.trax.tools;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -17,8 +18,7 @@ public abstract class TableAdapter<K, V> extends BaseAdapter implements Observer
 
     protected Context context;
 
-
-    public TableAdapter(ObservableTable<K, V> table) {
+    public TableAdapter(ObservableTable<K, V> table){
         this.table = table;
         this.lookup = Arrays.asList((K[])table.keySet().toArray());
         table.addObserver(this);
@@ -42,7 +42,7 @@ public abstract class TableAdapter<K, V> extends BaseAdapter implements Observer
     public V getNativeItem(int position){ return table.get(lookup.get(position)); }
 
     @Override
-    public void update(Observable observable, Object data) {
+    public void update(Observable observable, Object data){
         this.lookup = Arrays.asList((K[])table.keySet().toArray());
         notifyDataSetChanged();
     }

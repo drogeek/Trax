@@ -1,6 +1,7 @@
 package com.trax.tools;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.*;
 
@@ -9,6 +10,12 @@ import java.util.*;
  */
 public class ObservableTable<K, V> extends Observable implements Map<K, V> {
     private Map<K, V> self;
+
+    @Override
+    public void notifyObservers() {
+        setChanged();
+        super.notifyObservers(null);
+    }
 
     public ObservableTable(){
         self = new HashMap<K, V>();
@@ -67,19 +74,21 @@ public class ObservableTable<K, V> extends Observable implements Map<K, V> {
     }
 
     public V put(K key, V value) {
+        V ret = self.put(key, value);
         notifyObservers();
-        return self.put(key, value);
+        return ret;
     }
 
     public void putAll(Map<? extends K, ? extends V> map) {
-        notifyObservers();
         self.putAll(map);
+        notifyObservers();
     }
 
     @Override
     public V remove(Object key) {
+        V ret = self.remove(key);
         notifyObservers();
-        return self.remove(key);
+        return ret;
     }
 
     @Override
