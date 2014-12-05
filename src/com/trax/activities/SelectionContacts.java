@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract.*;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ListView;
 import com.trax.R;
 import com.trax.modes.Session;
@@ -19,17 +17,22 @@ import com.trax.tools.ObservableTable;
  */
 public class SelectionContacts extends Activity {
     int PICK_CONTACT = 1;
-    ListView listView;
+    ListView lvPendingFollower, lvFollower, lvToAccept;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selection_contacts);
 
-        listView = (ListView)findViewById(R.id.lv_Contact);
+        lvPendingFollower = (ListView)findViewById(R.id.lv_PendingFollower);
         ObservableTable<String, Follower> pending = Session.getInstance().getPendingFollowers();
-        ContactAdapter adapter = new ContactAdapter(this, pending);
-        listView.setAdapter(adapter);
+        ContactAdapter adapterPendingFollower = new ContactAdapter(this, pending);
+        lvPendingFollower.setAdapter(adapterPendingFollower);
+
+        lvFollower = (ListView)findViewById(R.id.lv_Follower);
+        ObservableTable<String,Follower> follower = Session.getInstance().getFollowers();
+        ContactAdapter adapterFollower = new ContactAdapter(this, follower);
+        lvFollower.setAdapter(adapterFollower);
     }
 
     public void openContactList(View v){

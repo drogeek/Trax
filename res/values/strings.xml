@@ -18,4 +18,6 @@
     <string name="instructionContactListAccess">Numéro de téléphone:</string>
     <string name="accept_invitation">Accepter</string>
     <string name="refuse_invitation">Refuser</string>
+    <string name="labelPendingFollowers">En attente</string>
+    <string name="labelFollowers">Traxeurs</string>
 </resources>

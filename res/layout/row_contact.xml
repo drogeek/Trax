@@ -5,19 +5,25 @@
         android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/layout_row">
     <ImageView
-            android:layout_width="20pt"
-            android:layout_height="20pt"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
             android:id="@+id/img_Contact"
+            android:paddingLeft="0dp"
+            android:paddingRight="10dp"
             />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/img_Contact"
             android:id="@+id/t_Contact"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
             />
-    <ImageButton android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_toRightOf="@id/t_Contact"
+    <ImageButton android:layout_width="30dip"
+                 android:layout_height="30dip"
+                 android:layout_alignParentRight="true"
                  android:id="@+id/b_Contact"
+                 android:padding="10dip"
+                 android:layout_centerVertical="true"
             />
 </RelativeLayout>
