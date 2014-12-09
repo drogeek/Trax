@@ -30,8 +30,6 @@ public class ContactAdapter extends TableAdapter<PhoneNumber, Follower> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final Follower currentFollower = getNativeItem(position);
 
-        Log.d("DTRAX", "getView(" + position + ") -> " + currentFollower);
-
         View view = inflater.inflate(R.layout.row_contact, parent, false);
         ImageView imageView = (ImageView)view.findViewById(R.id.img_Contact);
         TextView textView = (TextView)view.findViewById(R.id.t_Contact);

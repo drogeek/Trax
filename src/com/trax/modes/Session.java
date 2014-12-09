@@ -58,17 +58,11 @@ public abstract class Session {
 
         Log.d("DTRAX", "Confirmation de " + num + " -> " + f);
         for(PhoneNumber key: pendingFollowers.keySet())
-            Log.d("DTRAX", "\t" + key + " -> " + pendingFollowers.get(key));
+            Log.d("DTRAX", "     " + key + " -> " + pendingFollowers.get(key));
 
         if(answer.equals("yes") && f != null)
             followers.put(num, f);
         /* TODO: error handling */
-    }
-
-    public void removeFollower(Follower f){
-        followers.remove(f.getNum());
-        pendingFollowers.remove(f.getNum());
-        invitations.remove(f.getNum());
     }
 
     public void moveFollower(String num, Location location){
@@ -86,4 +80,18 @@ public abstract class Session {
     }
 
     public void setOwnPosition(Location l){}
+
+    public void removeFollower(Follower f){
+        removeFollower(f.getNum());
+    }
+
+    public void removeFollower(String num) {
+        removeFollower(new PhoneNumber(num));
+    }
+
+    public void removeFollower(PhoneNumber num){
+        followers.remove(num);
+        pendingFollowers.remove(num);
+        invitations.remove(num);
+    }
 }

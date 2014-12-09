@@ -69,8 +69,6 @@ public class BeaconReceiver extends BroadcastReceiver {
 
         String msg = message.getMessageBody();
 
-        Log.d("TRAX", "Message recu de "+num);
-
         try {
             /* On parse le message. */
             Scanner sc = new Scanner(msg).useDelimiter(":");
@@ -130,6 +128,8 @@ public class BeaconReceiver extends BroadcastReceiver {
                 case CHAT:
                     /* TODO: afficher le message chat */
                     break;
+                case DELETE:
+                    Session.getInstance().removeFollower(num);
                 default:
                     throw new ParseException("Unknown verb " + str_verb);
             }

@@ -40,11 +40,9 @@ public abstract class TableAdapter<K, V> extends BaseAdapter implements Observer
     }
 
     public V getNativeItem(int position){
-        Log.d("DTRAX", "getNativeItem(" + position + ") -> " + table.size() + " " + lookup.size() + " ==>");
-        for(K key: table.keySet()){
-            Log.d("DTRAX", "    " + key + table.get(key));
-        }
-        return table.get(lookup.get(position));
+        V ret = table.get(lookup.get(position));
+        assert ret != null;
+        return ret;
     }
 
     @Override
