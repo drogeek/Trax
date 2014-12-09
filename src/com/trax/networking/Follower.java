@@ -24,12 +24,13 @@ public class Follower {
         Phone.NUMBER
     };
 
-    private String num, name, couleur, picture;
+    private PhoneNumber num;
+    private String name, couleur, picture;
     private Location position;
 
     private Follower(){}
     public Follower(String num, String name) {
-        this.num = num;
+        this.num = new PhoneNumber(num);
         this.name = name;
         /* TODO: gestion des couleurs */
     }
@@ -38,7 +39,7 @@ public class Follower {
     public String getCouleur() {
         return couleur;
     }
-    public String getNum() {
+    public PhoneNumber getNum() {
         return num;
     }
     public String getName() {
@@ -57,7 +58,7 @@ public class Follower {
     public void sendSMS(String msg){
         Context context = Trax.getContext();
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(Intent.ACTION_SENDTO), 0);
-        SmsManager.getDefault().sendTextMessage(num, null, msg, pendingIntent, pendingIntent);
+        SmsManager.getDefault().sendTextMessage(num.getNum(), null, msg, pendingIntent, pendingIntent);
     }
 
     /* Factories */
@@ -89,10 +90,18 @@ public class Follower {
 
         follower.picture = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI));
         follower.name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME));
-        follower.num = cursor.getString(cursor.getColumnIndex(Phone.NUMBER));
+        follower.num = new PhoneNumber(cursor.getString(cursor.getColumnIndex(Phone.NUMBER)));
         /* TODO: chopper le numéro de téléphone portable uniquement */
         Log.d("DTRAX", String.format("Contact trouvé: %s, %s", follower.name, follower.num));
 
         return follower;
+    }
+
+    @Override
+    public String toString() {
+        return "Follower{" +
+                "name='" + name + '\'' +
+                ", num='" + num + '\'' +
+                '}';
     }
 }
