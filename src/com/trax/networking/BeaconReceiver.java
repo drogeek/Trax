@@ -60,6 +60,13 @@ public class BeaconReceiver extends BroadcastReceiver {
 
     public void parseMessage(SmsMessage message){
         String num = message.getOriginatingAddress();
+
+        /* PRÉSENT POUR LE DEBUG */
+        if(num.startsWith("1555")) {
+            num = num.substring(7);
+            Log.d("DTRAX", "" + message.getOriginatingAddress() + "changé en " + num);
+        }
+
         String msg = message.getMessageBody();
 
         Log.d("TRAX", "Message recu de "+num);
@@ -102,13 +109,13 @@ public class BeaconReceiver extends BroadcastReceiver {
                                 msg.substring(beginURL, endURL) :
                                 msg.substring(beginURL);
                     }
-                    Log.d("TRAX", "Invitation avec itineraire: " + URL);
+                    Log.d("TRAX", "Invitation de " + num + " avec itineraire: " + URL);
                     Trax.getApplication().show_invitation(f, URL);
                     break;
                 case ANSWER:
                     String answer = sc.next();
                     Log.d("DTRAX", String.format("Réponse recue de %s: %s", num, answer));
-                    Session.getInstance().confirm(num, answer);
+                    Session.getInstance().confirm(new PhoneNumber(num), answer);
                     break;
                 case POSITION:
                     Location location = new Location("unknown"); // provider

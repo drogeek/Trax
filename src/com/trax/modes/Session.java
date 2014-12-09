@@ -2,10 +2,13 @@ package com.trax.modes;
 
 import android.content.Intent;
 import android.location.Location;
+import android.telephony.PhoneNumberUtils;
+import android.util.Log;
 import com.trax.Trax;
 import com.trax.errors.AlreadyLaunchedSessionException;
 import com.trax.networking.BeaconTransmitter;
 import com.trax.networking.Follower;
+import com.trax.networking.PhoneNumber;
 import com.trax.tools.ObservableTable;
 
 import java.util.ArrayList;
@@ -21,9 +24,9 @@ public abstract class Session {
         // Trax.getApplication().startService(new Intent(Trax.getContext(), BeaconTransmitter.class));
     }
 
-    private ObservableTable<String, Follower> pendingFollowers = new ObservableTable<String, Follower>();
-    private ObservableTable<String, Follower> followers = new ObservableTable<String, Follower>();
-    private ObservableTable<String, Follower> invitations = new ObservableTable<String, Follower>();
+    private ObservableTable<PhoneNumber, Follower> pendingFollowers = new ObservableTable<PhoneNumber, Follower>();
+    private ObservableTable<PhoneNumber, Follower> followers = new ObservableTable<PhoneNumber, Follower>();
+    private ObservableTable<PhoneNumber, Follower> invitations = new ObservableTable<PhoneNumber, Follower>();
 
     //Getters
     public Collection<Follower> getFollowerList() {
@@ -34,13 +37,13 @@ public abstract class Session {
     }
     public Collection<Follower> getInvitationsList(){ return invitations.values(); }
 
-    public ObservableTable<String, Follower> getPendingFollowers() {
+    public ObservableTable<PhoneNumber, Follower> getPendingFollowers() {
         return pendingFollowers;
     }
-    public ObservableTable<String, Follower> getFollowers() {
+    public ObservableTable<PhoneNumber, Follower> getFollowers() {
         return followers;
     }
-    public ObservableTable<String, Follower> getInvitations() {
+    public ObservableTable<PhoneNumber, Follower> getInvitations() {
         return invitations;
     }
 
@@ -49,10 +52,15 @@ public abstract class Session {
         f.sendSMS(Trax.MSG_INVITATION);
     }
 
-    public void confirm(String num, String answer){
+    public void confirm(PhoneNumber num, String answer){
         Follower f = pendingFollowers.get(num);
         pendingFollowers.remove(num);
-        if(answer.equals("yes"))
+
+        Log.d("DTRAX", "Confirmation de " + num + " -> " + f);
+        for(PhoneNumber key: pendingFollowers.keySet())
+            Log.d("DTRAX", "\t" + key + " -> " + pendingFollowers.get(key));
+
+        if(answer.equals("yes") && f != null)
             followers.put(num, f);
         /* TODO: error handling */
     }

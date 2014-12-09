@@ -59,7 +59,7 @@ public class Trax extends Application {
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent();
                                 intent.setClass(BeaconReceiver.getContext(), MainMenu.class);
-                                intent.putExtra("num", f.getNum());
+                                intent.putExtra("num", f.getNum().toString());
                                 /* TODO: si l'invitation contient un itineraire, l'ajouter dans l'intent. */
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 BeaconReceiver.getContext().startActivity(intent);

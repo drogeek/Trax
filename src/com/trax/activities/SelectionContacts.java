@@ -9,6 +9,7 @@ import android.widget.ListView;
 import com.trax.R;
 import com.trax.modes.Session;
 import com.trax.networking.Follower;
+import com.trax.networking.PhoneNumber;
 import com.trax.tools.ContactAdapter;
 import com.trax.tools.ObservableTable;
 
@@ -25,12 +26,12 @@ public class SelectionContacts extends Activity {
         setContentView(R.layout.selection_contacts);
 
         lvPendingFollower = (ListView)findViewById(R.id.lv_PendingFollower);
-        ObservableTable<String, Follower> pending = Session.getInstance().getPendingFollowers();
+        ObservableTable<PhoneNumber, Follower> pending = Session.getInstance().getPendingFollowers();
         ContactAdapter adapterPendingFollower = new ContactAdapter(this, pending);
         lvPendingFollower.setAdapter(adapterPendingFollower);
 
         lvFollower = (ListView)findViewById(R.id.lv_Follower);
-        ObservableTable<String,Follower> follower = Session.getInstance().getFollowers();
+        ObservableTable<PhoneNumber, Follower> follower = Session.getInstance().getFollowers();
         ContactAdapter adapterFollower = new ContactAdapter(this, follower);
         lvFollower.setAdapter(adapterFollower);
     }

@@ -39,10 +39,17 @@ public abstract class TableAdapter<K, V> extends BaseAdapter implements Observer
         return getNativeItem(position);
     }
 
-    public V getNativeItem(int position){ return table.get(lookup.get(position)); }
+    public V getNativeItem(int position){
+        Log.d("DTRAX", "getNativeItem(" + position + ") -> " + table.size() + " " + lookup.size() + " ==>");
+        for(K key: table.keySet()){
+            Log.d("DTRAX", "    " + key + table.get(key));
+        }
+        return table.get(lookup.get(position));
+    }
 
     @Override
     public void update(Observable observable, Object data){
+        /* on rafraichit la table de correspondance */
         this.lookup = Arrays.asList((K[])table.keySet().toArray());
         notifyDataSetChanged();
     }
