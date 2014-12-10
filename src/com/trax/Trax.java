@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.WindowManager;
 import com.trax.activities.MainMenu;
 import com.trax.networking.BeaconReceiver;
@@ -30,8 +31,8 @@ public class Trax extends Application {
     public static String MSG_DELETE = MSG_START + VERB.DELETE;
     public static int COORDS_FORMAT = Location.FORMAT_SECONDS;
 
-    public static long time_delta = 1000*60*5; // 5 minutes
-    public static long distance_delta = 20; // 20 metres
+    public static long time_delta = 1000;//*60*5; // 5 minutes
+    public static long distance_delta = 0; // 20 metres
 
     private static Trax instance;
 
@@ -55,20 +56,33 @@ public class Trax extends Application {
             case PopupDialog:
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BeaconReceiver.getContext());
                 dialogBuilder.setIcon(android.R.drawable.ic_dialog_alert);
-                dialogBuilder.setMessage(String.format("Invitation Trax recue de %s (%s)", f.getName(), f.getNum()));
+                dialogBuilder.setMessage(String.format("Invitation Trax recue de %s (%s)", f.getName(), f.getPhoneNum().getNum()));
                 dialogBuilder.setPositiveButton(R.string.accept_invitation, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent();
                                 intent.setClass(BeaconReceiver.getContext(), MainMenu.class);
-                                intent.putExtra("num", f.getNum().toString());
+                                intent.putExtra("num", f.getPhoneNum().toString());
                                 /* TODO: si l'invitation contient un itineraire, l'ajouter dans l'intent. */
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 BeaconReceiver.getContext().startActivity(intent);
+
+                                //on envoie une réponse oui
+                                Log.d("DTRAX", "Réponse envoyée " + String.format(Trax.MSG_ANSWER,"yes"));
+                                f.sendSMS(String.format(Trax.MSG_ANSWER,"yes"));
+
                             }
                         }
                 );
-                dialogBuilder.setNegativeButton(R.string.refuse_invitation, null);
+                dialogBuilder.setNegativeButton(R.string.refuse_invitation, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //envoie réponse non
+                        f.sendSMS(String.format(Trax.MSG_ANSWER, "no"));
+                        Log.d("DTRAX", "Réponse envoyée " + String.format(Trax.MSG_ANSWER,"no"));
+                    }
+                });
                 AlertDialog dialog = dialogBuilder.create();
                 dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
                 dialog.show();

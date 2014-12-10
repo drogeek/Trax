@@ -29,6 +29,7 @@ public class Follower {
     private Location position;
 
     private Follower(){}
+
     public Follower(String num, String name) {
         this.num = new PhoneNumber(num);
         this.name = name;
@@ -39,7 +40,7 @@ public class Follower {
     public String getCouleur() {
         return couleur;
     }
-    public PhoneNumber getNum() {
+    public PhoneNumber getPhoneNum() {
         return num;
     }
     public String getName() {
@@ -63,7 +64,8 @@ public class Follower {
 
     /* Factories */
     static public Follower fromNum(String num, ContentResolver cr){
-        Follower f = new Follower("Inconnu", num);
+        Follower f = new Follower(num, "Inconnu"); //t'avais juste inversé les 2, c'est pour ça que ça plantait
+
         Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(num));
         Cursor cursor = cr.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
         if (cursor == null) return f;

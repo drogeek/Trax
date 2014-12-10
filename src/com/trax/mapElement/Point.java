@@ -5,7 +5,7 @@ import android.location.Location;
 /**
  * Created by unautre on 25/11/14.
  */
-public class Point {
+public abstract class Point {
     Location position;
 
     public Location getPosition() {

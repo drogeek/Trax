@@ -7,5 +7,6 @@ public class SelfPoint extends MovablePoint {
     @Override
     public void onMovement() {
         /* TODO ! */
+
     }
 }

@@ -1,19 +1,13 @@
 package com.trax.networking;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
-import android.view.WindowManager;
-import android.widget.Toast;
-import com.trax.R;
 import com.trax.Trax;
-import com.trax.activities.MainMenu;
 import com.trax.errors.ParseException;
 import com.trax.modes.Session;
 
@@ -31,7 +25,7 @@ public class BeaconReceiver extends BroadcastReceiver {
     private static Context context;
     public BeaconReceiver() {
         super();
-        Log.d("TRAX", "BeaconReceiver créé.");
+        Log.d("DTRAX", "BeaconReceiver créé.");
         instance = this;
     }
 
@@ -73,9 +67,9 @@ public class BeaconReceiver extends BroadcastReceiver {
             /* On parse le message. */
             Scanner sc = new Scanner(msg).useDelimiter(":");
             String head = sc.next();
-            Log.d("TRAX", "Header: " + head);
+            Log.d("DTRAX", "Header: " + head);
             if (!head.equals(Trax.base_name)) return;
-            Log.d("TRAX", "C'est un message TRAX !");
+            Log.d("DTRAX", "C'est un message TRAX !");
 
             /* le message est bien pour nous, on l'intercepte. */
             abortBroadcast();
@@ -92,7 +86,8 @@ public class BeaconReceiver extends BroadcastReceiver {
 
             Trax.VERB verb;
             String str_verb = sc.next();
-            try{ verb = Trax.VERB.valueOf(str_verb); }
+//            Log.d("DTRAX",str_verb);
+            try{ verb = Trax.VERB.valueOf(str_verb);}
             catch(IllegalArgumentException e){ throw new ParseException("Unknown verb " + str_verb); }
 
             switch(verb){
@@ -107,7 +102,7 @@ public class BeaconReceiver extends BroadcastReceiver {
                                 msg.substring(beginURL, endURL) :
                                 msg.substring(beginURL);
                     }
-                    Log.d("TRAX", "Invitation de " + num + " avec itineraire: " + URL);
+                    Log.d("DTRAX", "Invitation de " + f.getName() + " " + f.getPhoneNum().getNum() + " avec itineraire: " + URL);
                     Trax.getApplication().show_invitation(f, URL);
                     break;
                 case ANSWER:
@@ -129,6 +124,7 @@ public class BeaconReceiver extends BroadcastReceiver {
                     /* TODO: afficher le message chat */
                     break;
                 case DELETE:
+                    Log.d("DTRAX","Utilisateur distant vous a supprimé");
                     Session.getInstance().removeFollower(num);
                 default:
                     throw new ParseException("Unknown verb " + str_verb);

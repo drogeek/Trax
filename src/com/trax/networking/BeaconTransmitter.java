@@ -8,6 +8,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.location.LocationListener;
+import android.util.Log;
 import com.trax.Trax;
 import com.trax.modes.Session;
 
@@ -16,11 +17,17 @@ import com.trax.modes.Session;
  * Cette classe transmet les informations GPS aux followers
  */
 public class BeaconTransmitter extends Service implements LocationListener {
+
+    LocationManager locationManager;
     @Override
     public void onCreate() {
         super.onCreate();
         LocationManager lm = (LocationManager)Trax.getApplication().getSystemService(Context.LOCATION_SERVICE);
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, Trax.time_delta, Trax.distance_delta, this);
+
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,Trax.time_delta,Trax.distance_delta,this);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,Trax.time_delta,Trax.distance_delta,this);
     }
 
     @Override
@@ -35,6 +42,7 @@ public class BeaconTransmitter extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+        Log.d("DTRAX","Position changée");
         for(Follower f: Session.getInstance().getFollowerList()){
             f.sendSMS(String.format(Trax.MSG_POSITION,
                     Location.convert(location.getLatitude(), Trax.COORDS_FORMAT),

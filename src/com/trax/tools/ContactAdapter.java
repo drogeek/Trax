@@ -43,7 +43,8 @@ public class ContactAdapter extends TableAdapter<PhoneNumber, Follower> {
             imageView.setImageResource(R.drawable.anonymous);
 
         textView.setText(currentFollower.getName());
-        //imageButton à ajouter
+
+        //bouton suppression
         imageButton.setImageResource(R.drawable.ic_close);
         imageButton.setOnClickListener(new View.OnClickListener() {
 

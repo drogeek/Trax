@@ -1,19 +1,14 @@
 package com.trax.modes;
 
-import android.content.Intent;
 import android.location.Location;
-import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import com.trax.Trax;
 import com.trax.errors.AlreadyLaunchedSessionException;
-import com.trax.networking.BeaconTransmitter;
 import com.trax.networking.Follower;
 import com.trax.networking.PhoneNumber;
 import com.trax.tools.ObservableTable;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by unautre on 23/11/14.
@@ -47,9 +42,13 @@ public abstract class Session {
         return invitations;
     }
 
-    public void addFollower(Follower f){
-        pendingFollowers.put(f.getNum(), f);
+    public void addPendingFollower(Follower f){
+        pendingFollowers.put(f.getPhoneNum(), f);
         f.sendSMS(Trax.MSG_INVITATION);
+    }
+
+    public void addFollower(Follower f){
+        followers.put(f.getPhoneNum(),f);
     }
 
     public void confirm(PhoneNumber num, String answer){
@@ -82,7 +81,7 @@ public abstract class Session {
     public void setOwnPosition(Location l){}
 
     public void removeFollower(Follower f){
-        removeFollower(f.getNum());
+        removeFollower(f.getPhoneNum());
     }
 
     public void removeFollower(String num) {
@@ -90,8 +89,14 @@ public abstract class Session {
     }
 
     public void removeFollower(PhoneNumber num){
-        followers.remove(num);
+
         pendingFollowers.remove(num);
         invitations.remove(num);
+        
+        //on envoie un message seulement si le follower était déjà accepté
+        if(followers.remove(num) != null) {
+            Log.d("DTRAX","Follower supprimé");
+            Follower.fromNum(num.getNum(), Trax.getContext().getContentResolver()).sendSMS(Trax.MSG_DELETE);
+        }
     }
 }

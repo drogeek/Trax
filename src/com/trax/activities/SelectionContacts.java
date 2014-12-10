@@ -1,9 +1,9 @@
 package com.trax.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract.*;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ListView;
 import com.trax.R;
@@ -16,7 +16,7 @@ import com.trax.tools.ObservableTable;
 /**
  * Created by unautre on 25/11/14.
  */
-public class SelectionContacts extends Activity {
+public class SelectionContacts extends ActionBarActivity {
     int PICK_CONTACT = 1;
     ListView lvPendingFollower, lvFollower, lvToAccept;
 
@@ -53,6 +53,6 @@ public class SelectionContacts extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == PICK_CONTACT && resultCode == RESULT_OK)
-            Session.getInstance().addFollower(Follower.fromUri(data.getData(), getContentResolver()));
+            Session.getInstance().addPendingFollower(Follower.fromUri(data.getData(), getContentResolver()));
     }
 }

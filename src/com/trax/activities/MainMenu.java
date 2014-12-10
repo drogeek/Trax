@@ -1,5 +1,6 @@
 package com.trax.activities;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,13 +11,13 @@ import com.trax.errors.AlreadyLaunchedSessionException;
 import com.trax.modes.Session;
 import com.trax.modes.SessionEnregistrement;
 import com.trax.modes.SessionItinerant;
-import com.trax.networking.BeaconReceiver;
 import com.trax.networking.Follower;
 
 public class MainMenu extends Activity {
     /**
      * Called when the activity is first created.
      */
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
