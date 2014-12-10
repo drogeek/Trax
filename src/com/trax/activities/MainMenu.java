@@ -71,5 +71,6 @@ public class MainMenu extends Activity {
     protected void onResume() {
         super.onResume();
         Session.endInstance();
+        Log.w("DTRAX", "Session supprimée dans MainMenu.onResume()");
     }
 }

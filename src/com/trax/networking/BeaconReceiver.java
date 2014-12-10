@@ -102,7 +102,7 @@ public class BeaconReceiver extends BroadcastReceiver {
                                 msg.substring(beginURL, endURL) :
                                 msg.substring(beginURL);
                     }
-                    Log.d("DTRAX", "Invitation de " + f.getName() + " " + f.getPhoneNum().getNum() + " avec itineraire: " + URL);
+                    Log.d("DTRAX", "Invitation de " + f.getName() + " " + f.getPhoneNum() + " avec itineraire: " + URL);
                     Trax.getApplication().show_invitation(f, URL);
                     break;
                 case ANSWER:
