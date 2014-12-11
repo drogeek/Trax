@@ -23,6 +23,7 @@ public class ContactAdapter extends TableAdapter<PhoneNumber, Follower> {
     public ContactAdapter(Context context, ObservableTable<PhoneNumber, Follower> table) {
         super(table);
         this.context = context;
+        assert Session.getInstance() != null;
     }
 
     @Override

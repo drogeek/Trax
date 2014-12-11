@@ -89,14 +89,24 @@ public abstract class Session {
     }
 
     public void removeFollower(PhoneNumber num){
+        Follower f;
 
-        pendingFollowers.remove(num);
-        invitations.remove(num);
-        
-        //on envoie un message seulement si le follower était déjà accepté
-        if(followers.remove(num) != null) {
-            Log.d("DTRAX","Follower supprimé");
-            Follower.fromNum(num.getNum(), Trax.getContext().getContentResolver()).sendSMS(Trax.MSG_DELETE);
+        f = pendingFollowers.remove(num);
+        if(f != null){
+            f.sendSMS(Trax.MSG_DELETE);
+            return;
+        }
+
+        f = invitations.remove(num);
+        if(f != null){
+            f.sendSMS(String.format(Trax.MSG_ANSWER, "no"));
+            return;
+        }
+
+        followers.remove(num);
+        if(f != null){
+            f.sendSMS(Trax.MSG_DELETE);
+            return;
         }
     }
 }
