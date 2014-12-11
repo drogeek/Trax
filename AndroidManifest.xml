@@ -24,13 +24,13 @@
         </receiver>
         <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyA2XHLSi03q1fFiBRoVNyWW5jyTkJa00tg"/>
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-        <activity android:name=".activities.MainMenu"  android:label="@string/app_name">
+        <activity android:name=".activities.MainMenu"  android:theme="@style/Theme.AppCompat.Light" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MapActivity"/>
+        <activity android:name=".activities.MapActivity" android:theme="@style/Theme.AppCompat.Light"/>
         <activity android:name=".activities.SelectionItineraire"  android:label="selectionItineraire"/>
         <activity android:name=".activities.SelectionContacts" android:theme="@style/Theme.AppCompat.Light" android:label="selectionContacts"/>
         <service android:name=".networking.BeaconTransmitter"/>

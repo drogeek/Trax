@@ -4,6 +4,7 @@ package com.trax.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import com.trax.R;
@@ -13,7 +14,7 @@ import com.trax.modes.SessionEnregistrement;
 import com.trax.modes.SessionItinerant;
 import com.trax.networking.Follower;
 
-public class MainMenu extends Activity {
+public class MainMenu extends ActionBarActivity {
     /**
      * Called when the activity is first created.
      */
@@ -40,7 +41,7 @@ public class MainMenu extends Activity {
                 Log.e("TRAX", "WTF ? Session déjà lancée.");
             }
             Session.getInstance().addFollower(Follower.fromNum(num, getContentResolver()));
-            startActivity(new Intent(this, MapActivity.class));
+            startActivity(new Intent(this, CustomMapFragment.class));
         }else {
             setContentView(R.layout.main);
             Log.d("TRAX", "demande de lancement du BeaconReceiver");
