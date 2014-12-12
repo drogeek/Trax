@@ -34,6 +34,34 @@ public class Trax extends Application {
     public static long time_delta = 1000;//*60*5; // 5 minutes
     public static long distance_delta = 0; // 20 metres
 
+    //Map
+    public static double latitude, longitude;
+    public static float zoom;
+
+    public static float getZoom() {
+        return zoom;
+    }
+
+    public static void setZoom(float zoom) {
+        Trax.zoom = zoom;
+    }
+
+    public static double getLongitude() {
+        return longitude;
+    }
+
+    public static void setLongitude(double longitude) {
+        Trax.longitude = longitude;
+    }
+
+    public static double getLatitude() {
+        return latitude;
+    }
+
+    public static void setLatitude(double latitude) {
+        Trax.latitude = latitude;
+    }
+
     private static Trax instance;
 
     @Override

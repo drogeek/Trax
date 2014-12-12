@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.provider.ContactsContract.*;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 import com.trax.R;
 import com.trax.modes.Session;
 import com.trax.networking.Follower;
@@ -41,6 +44,8 @@ public class SelectionContacts extends ActionBarActivity {
         ObservableTable<PhoneNumber, Follower> follower = Session.getInstance().getFollowers();
         ContactAdapter adapterFollower = new ContactAdapter(this, follower);
         lvFollower.setAdapter(adapterFollower);
+
+
     }
 
     public void openContactList(View v){

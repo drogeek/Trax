@@ -28,6 +28,7 @@ public class CustomMapFragment extends FragmentActivity implements GoogleMap.OnM
         map.setMyLocationEnabled(true);
         map.setOnMapLongClickListener(this);
 
+
         // nice and easy
         Polyline line = map.addPolyline(new PolylineOptions()
                 .add(new LatLng(51.5, -0.1), new LatLng(40.7, -74.0))
