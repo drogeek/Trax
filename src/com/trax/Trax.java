@@ -32,7 +32,7 @@ public class Trax extends Application {
     public static int COORDS_FORMAT = Location.FORMAT_SECONDS;
 
     public static long time_delta = 1000;//*60*5; // 5 minutes
-    public static long distance_delta = 0; // 20 metres
+    public static long distance_delta = 1; // 20 metres
 
     //Map
     public static double latitude, longitude;

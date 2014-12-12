@@ -22,8 +22,17 @@ public class BeaconTransmitter extends Service implements LocationListener {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d("DTRAX", "Service BeaconTransmitter lancé.");
         LocationManager lm = (LocationManager)Trax.getApplication().getSystemService(Context.LOCATION_SERVICE);
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, Trax.time_delta, Trax.distance_delta, this);
+
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if(location == null)
+            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        Session.getInstance().setOwnPosition(location);
+        Log.d("DTRAX", "Providers possibles:");
+        for(String provider: lm.getAllProviders())
+            Log.d("DTRAX", "       " + provider);
 
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,Trax.time_delta,Trax.distance_delta,this);
@@ -55,16 +64,16 @@ public class BeaconTransmitter extends Service implements LocationListener {
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
+        Log.d("DTRAX", "onStatusChanged called: " + provider);
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-
+        Log.d("DTRAX", "onProviderEnabled called: " + provider);
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-
+        Log.d("DTRAX", "onProviderDisabled called: " + provider);
     }
 }

@@ -1,9 +1,11 @@
 package com.trax.modes;
 
+import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
 import com.trax.Trax;
 import com.trax.errors.AlreadyLaunchedSessionException;
+import com.trax.networking.BeaconTransmitter;
 import com.trax.networking.Follower;
 import com.trax.networking.PhoneNumber;
 import com.trax.tools.ObservableTable;
@@ -16,7 +18,7 @@ import java.util.Collection;
 public abstract class Session {
     protected Session() throws AlreadyLaunchedSessionException {
         setInstance(this);
-        // Trax.getApplication().startService(new Intent(Trax.getContext(), BeaconTransmitter.class));
+        Trax.getApplication().startService(new Intent(Trax.getContext(), BeaconTransmitter.class));
     }
 
     private ObservableTable<PhoneNumber, Follower> pendingFollowers = new ObservableTable<PhoneNumber, Follower>();
