@@ -12,6 +12,7 @@
 
     <!--strings généraux-->
     <string name="b_suivant">Suivant</string>
+    <string name="askQuit">Voulez-vous vraiment quitter?</string>
 
     <!--strings pour l'ajout de contacts-->
     <string name="contactListAccess">...</string>

@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.WindowManager;
 import com.trax.activities.MainMenu;
+import com.trax.modes.Session;
 import com.trax.networking.BeaconReceiver;
 import com.trax.networking.Follower;
 
@@ -92,7 +93,7 @@ public class Trax extends Application {
                                 intent.setClass(BeaconReceiver.getContext(), MainMenu.class);
                                 intent.putExtra("num", f.getPhoneNum().toString());
                                 /* TODO: si l'invitation contient un itineraire, l'ajouter dans l'intent. */
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
                                 BeaconReceiver.getContext().startActivity(intent);
 
                                 //on envoie une réponse oui
@@ -120,4 +121,6 @@ public class Trax extends Application {
                 break;
         }
     }
+
+
 }

@@ -74,7 +74,12 @@ public abstract class Session {
     /* C'est une classe singleton. */
     static private Session instance;
     static public Session getInstance(){ return instance; }
-    static public void endInstance(){ instance = null; }
+    static public void endInstance(){
+        instance = null;
+        Trax.setZoom(0);
+        Trax.setLatitude(0);
+        Trax.setLongitude(0);
+    }
     static public void setInstance(Session instance) throws AlreadyLaunchedSessionException {
         if(Session.instance != null) throw new AlreadyLaunchedSessionException();
         Session.instance = instance;

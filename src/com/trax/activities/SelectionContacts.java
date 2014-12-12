@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.trax.R;
+import com.trax.Trax;
 import com.trax.modes.Session;
 import com.trax.networking.Follower;
 import com.trax.networking.PhoneNumber;
