@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import com.trax.R;
+import com.trax.Trax;
 import com.trax.errors.AlreadyLaunchedSessionException;
 import com.trax.modes.Session;
 import com.trax.modes.SessionEnregistrement;
@@ -73,5 +74,10 @@ public class MainMenu extends ActionBarActivity {
         super.onResume();
         Session.endInstance();
         Log.w("DTRAX", "Session supprimée dans MainMenu.onResume()");
+    }
+
+    @Override
+    public void onBackPressed() {
+        Trax.getApplication().confirmQuit();
     }
 }

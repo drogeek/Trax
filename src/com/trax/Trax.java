@@ -120,4 +120,21 @@ public class Trax extends Application {
                 break;
         }
     }
+
+    public void confirmQuit(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage(R.string.askQuit);
+
+        alertDialog.setNegativeButton("Non merci", null);
+        alertDialog.setPositiveButton("Oui, fini de traxer!", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                System.exit(0);
+            }
+        });
+
+        AlertDialog dialog = alertDialog.create();
+        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        dialog.show();
+    }
 }

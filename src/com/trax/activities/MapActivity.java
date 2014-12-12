@@ -74,4 +74,9 @@ public class MapActivity extends ActionBarActivity {
     public void openContacts(){
         startActivity(new Intent(this, SelectionContacts.class));
     }
+
+    @Override
+    public void onBackPressed() {
+        Trax.getApplication().confirmQuit();
+    }
 }

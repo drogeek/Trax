@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.trax.R;
+import com.trax.Trax;
 import com.trax.modes.Session;
 import com.trax.networking.Follower;
 import com.trax.networking.PhoneNumber;
@@ -89,4 +90,8 @@ public class SelectionContacts extends ActionBarActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public void onBackPressed() {
+        Trax.getApplication().confirmQuit();
+    }
 }
