@@ -90,8 +90,4 @@ public class SelectionContacts extends ActionBarActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public void onBackPressed() {
-        Trax.getApplication().confirmQuit();
-    }
 }

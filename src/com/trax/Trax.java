@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.WindowManager;
 import com.trax.activities.MainMenu;
+import com.trax.modes.Session;
 import com.trax.networking.BeaconReceiver;
 import com.trax.networking.Follower;
 
@@ -92,7 +93,7 @@ public class Trax extends Application {
                                 intent.setClass(BeaconReceiver.getContext(), MainMenu.class);
                                 intent.putExtra("num", f.getPhoneNum().toString());
                                 /* TODO: si l'invitation contient un itineraire, l'ajouter dans l'intent. */
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
                                 BeaconReceiver.getContext().startActivity(intent);
 
                                 //on envoie une réponse oui
@@ -121,20 +122,5 @@ public class Trax extends Application {
         }
     }
 
-    public void confirmQuit(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage(R.string.askQuit);
 
-        alertDialog.setNegativeButton("Non merci", null);
-        alertDialog.setPositiveButton("Oui, fini de traxer!", new DialogInterface.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                System.exit(0);
-            }
-        });
-
-        AlertDialog dialog = alertDialog.create();
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
-    }
 }

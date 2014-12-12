@@ -17,17 +17,13 @@ import com.trax.modes.Session;
  * Cette classe transmet les informations GPS aux followers
  */
 public class BeaconTransmitter extends Service implements LocationListener {
-
-    LocationManager locationManager;
+    LocationManager lm;
     @Override
     public void onCreate() {
         super.onCreate();
-        LocationManager lm = (LocationManager)Trax.getApplication().getSystemService(Context.LOCATION_SERVICE);
+        lm = (LocationManager)Trax.getApplication().getSystemService(Context.LOCATION_SERVICE);
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, Trax.time_delta, Trax.distance_delta, this);
-
-        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,Trax.time_delta,Trax.distance_delta,this);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,Trax.time_delta,Trax.distance_delta,this);
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,Trax.time_delta,Trax.distance_delta,this);
     }
 
     @Override

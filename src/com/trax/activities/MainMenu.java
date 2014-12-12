@@ -76,8 +76,4 @@ public class MainMenu extends ActionBarActivity {
         Log.w("DTRAX", "Session supprimée dans MainMenu.onResume()");
     }
 
-    @Override
-    public void onBackPressed() {
-        Trax.getApplication().confirmQuit();
-    }
 }
