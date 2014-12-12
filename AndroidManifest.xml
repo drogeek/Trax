@@ -30,9 +30,27 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MapActivity" android:theme="@style/Theme.AppCompat.Light"/>
-        <activity android:name=".activities.SelectionItineraire"  android:label="selectionItineraire"/>
-        <activity android:name=".activities.SelectionContacts" android:theme="@style/Theme.AppCompat.Light" android:label="selectionContacts"/>
+        <activity android:name=".activities.MapActivity"
+                  android:theme="@style/Theme.AppCompat.Light"
+                  android:uiOptions="splitActionBarWhenNarrow">
+
+                <meta-data android:name="android.support.UI_OPTIONS"
+                           android:value="splitActionBarWhenNarrow" />
+        </activity>
+
+        <activity android:name=".activities.SelectionItineraire"
+                  android:label="selectionItineraire"/>
+
+        <activity android:name=".activities.SelectionContacts"
+                  android:theme="@style/Theme.AppCompat.Light"
+                  android:label="selectionContacts"
+                  android:parentActivityName=".activities.MapActivity">
+                    <!-- Parent activity meta-data to support API level 7+ -->
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value=".activities.MapActivity" />
+        </activity>
+
         <service android:name=".networking.BeaconTransmitter"/>
     </application>
 </manifest>

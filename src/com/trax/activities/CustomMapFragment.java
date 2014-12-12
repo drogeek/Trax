@@ -23,7 +23,7 @@ public class CustomMapFragment extends FragmentActivity implements GoogleMap.OnM
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        map = ((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+        map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
         map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
         map.setMyLocationEnabled(true);
         map.setOnMapLongClickListener(this);
@@ -32,8 +32,8 @@ public class CustomMapFragment extends FragmentActivity implements GoogleMap.OnM
         Polyline line = map.addPolyline(new PolylineOptions()
                 .add(new LatLng(51.5, -0.1), new LatLng(40.7, -74.0))
                 .width(5).color(Color.RED));
-
     }
+
 
     @Override
     public void onMapLongClick(LatLng latLng) {

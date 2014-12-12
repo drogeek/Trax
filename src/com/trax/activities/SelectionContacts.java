@@ -3,7 +3,11 @@ package com.trax.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract.*;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import com.trax.R;
@@ -24,6 +28,9 @@ public class SelectionContacts extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selection_contacts);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDefaultDisplayHomeAsUpEnabled(true);
 
         lvPendingFollower = (ListView)findViewById(R.id.lv_PendingFollower);
         ObservableTable<PhoneNumber, Follower> pending = Session.getInstance().getPendingFollowers();
@@ -55,4 +62,26 @@ public class SelectionContacts extends ActionBarActivity {
         if(requestCode == PICK_CONTACT && resultCode == RESULT_OK)
             Session.getInstance().addPendingFollower(Follower.fromUri(data.getData(), getContentResolver()));
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_contactList:
+                openContactList(getWindow().getDecorView().findViewById(android.R.id.content));
+                return true;
+            case R.id.action_map:
+                openMap(getWindow().getDecorView().findViewById(android.R.id.content));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.contact_layout_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
 }
