@@ -37,6 +37,7 @@ public class SelectionContacts extends ActionBarActivity {
         actionBar.setDefaultDisplayHomeAsUpEnabled(true);
 
         lvPendingFollower = (ListView)findViewById(R.id.lv_PendingFollower);
+        Log.d("DTRAX", "Session:" + Session.getInstance());
         ObservableTable<PhoneNumber, Follower> pending = Session.getInstance().getPendingFollowers();
         ContactAdapter adapterPendingFollower = new ContactAdapter(this, pending);
         lvPendingFollower.setAdapter(adapterPendingFollower);

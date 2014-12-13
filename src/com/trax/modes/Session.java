@@ -77,9 +77,6 @@ public abstract class Session {
     static public void endInstance(){
         Trax.getApplication().stopService(new Intent(Trax.getContext(), BeaconTransmitter.class));
         instance = null;
-        Trax.setZoom(0);
-        Trax.setLatitude(0);
-        Trax.setLongitude(0);
     }
     static public void setInstance(Session instance) throws AlreadyLaunchedSessionException {
         if(Session.instance != null) throw new AlreadyLaunchedSessionException();
