@@ -75,6 +75,7 @@ public abstract class Session {
     static private Session instance;
     static public Session getInstance(){ return instance; }
     static public void endInstance(){
+        Trax.getApplication().stopService(new Intent(Trax.getContext(), BeaconTransmitter.class));
         instance = null;
         Trax.setZoom(0);
         Trax.setLatitude(0);

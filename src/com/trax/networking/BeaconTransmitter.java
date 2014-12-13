@@ -29,7 +29,10 @@ public class BeaconTransmitter extends Service implements LocationListener {
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if(location == null)
             location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        Session.getInstance().setOwnPosition(location);
+
+        try{ Session.getInstance().setOwnPosition(location); }
+        catch(NullPointerException e){ Log.e("DTRAX", "Session inexistante ?", e); }
+
         Log.d("DTRAX", "Providers possibles:");
         for(String provider: lm.getAllProviders())
             Log.d("DTRAX", "       " + provider);
@@ -48,14 +51,18 @@ public class BeaconTransmitter extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         Log.d("DTRAX","Position changée");
-        for(Follower f: Session.getInstance().getFollowerList()){
-            f.sendSMS(String.format(Trax.MSG_POSITION,
-                    Location.convert(location.getLatitude(), Trax.COORDS_FORMAT),
-                    Location.convert(location.getLongitude(), Trax.COORDS_FORMAT),
-                    Location.convert(location.getAltitude(), Trax.COORDS_FORMAT)
-            ));
+        try {
+            for (Follower f : Session.getInstance().getFollowerList()) {
+                f.sendSMS(String.format(Trax.MSG_POSITION,
+                        Location.convert(location.getLatitude(), Trax.COORDS_FORMAT),
+                        Location.convert(location.getLongitude(), Trax.COORDS_FORMAT),
+                        Location.convert(location.getAltitude(), Trax.COORDS_FORMAT)
+                ));
+            }
+            Session.getInstance().setOwnPosition(location);
+        }catch(NullPointerException e){
+            Log.e("DTRAX", "Session nulle: ", e);
         }
-        Session.getInstance().setOwnPosition(location);
     }
 
     @Override

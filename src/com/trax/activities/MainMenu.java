@@ -42,7 +42,7 @@ public class MainMenu extends ActionBarActivity {
                 Log.e("TRAX", "WTF ? Session déjà lancée.");
             }
             Session.getInstance().addFollower(Follower.fromNum(num, getContentResolver()));
-            startActivity(new Intent(this, CustomMapFragment.class));
+            startActivity(new Intent(this, MapActivity.class));
         }else {
             setContentView(R.layout.main);
             Log.d("TRAX", "demande de lancement du BeaconReceiver");

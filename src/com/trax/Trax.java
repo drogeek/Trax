@@ -93,7 +93,7 @@ public class Trax extends Application {
                                 intent.setClass(BeaconReceiver.getContext(), MainMenu.class);
                                 intent.putExtra("num", f.getPhoneNum().toString());
                                 /* TODO: si l'invitation contient un itineraire, l'ajouter dans l'intent. */
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 BeaconReceiver.getContext().startActivity(intent);
 
                                 //on envoie une réponse oui
