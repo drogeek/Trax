@@ -59,7 +59,7 @@ public class MainMenu extends ActionBarActivity {
         /* TODO ! */
         try {
             new SessionEnregistrement();
-            startActivity(new Intent(this, SelectionContacts.class));
+            startActivity(new Intent(this, MapActivity.class));
         } catch (AlreadyLaunchedSessionException e) {
             Log.e("DTRAX", e.toString());
         }

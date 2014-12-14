@@ -102,7 +102,6 @@ public abstract class Session {
         f = pendingFollowers.remove(num);
         if(f != null){
             //f.sendSMS(Trax.MSG_DELETE);
-            f.deleteFollower(); // pour les observeurs du follower
 
             return;
         }
@@ -110,7 +109,6 @@ public abstract class Session {
         f = invitations.remove(num);
         if(f != null){
             f.sendSMS(String.format(Trax.MSG_ANSWER, "no"));
-            f.deleteFollower(); // pour les observeurs du follower
 
             return;
         }

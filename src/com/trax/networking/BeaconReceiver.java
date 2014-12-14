@@ -120,15 +120,17 @@ public class BeaconReceiver extends BroadcastReceiver {
 
                     //si on reçoit la position d'un follower qu'on a pas dans la liste, on lui demande de nous supprimer
                     Log.d("DTRAX","Reçu d'une position");
-                    Log.d("DTRAX","Session = " + Session.getInstance());
-                    Log.d("DTRAX","Follower trouvé = " + Session.getInstance().getFollowers().containsKey(new PhoneNumber(num)));
-                    if(Session.getInstance() != null && Session.getInstance().getFollowers().containsKey(new PhoneNumber(num))) {
+
+//                    if(Session.getInstance() != null && Session.getInstance().getFollowers().containsKey(new PhoneNumber(num))) {
+                    try{
                         Log.d("DTRAX","On bouge le follower");
                         Session.getInstance().moveFollower(num, location);
                     }
-                    else {
+//                    else {
+                    catch (NullPointerException e){
                         Follower.fromNum(num, getContext().getContentResolver()).sendSMS(Trax.MSG_DELETE);
-                        Log.d("DTRAX","On envoie un message de suppression car on ne l'a pas trouvé ou la session n'existe pas");
+                        Log.e("DTRAX","On envoie un message de suppression car on n'a pas trouvé le follower " +
+                                "ou la session n'existe pas", e);
                     }
 
                     break;
