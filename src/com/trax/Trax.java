@@ -91,18 +91,22 @@ public class Trax extends Application {
                 dialogBuilder.setPositiveButton(R.string.accept_invitation, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                Log.d("DTRAX","Validation invitation");
                                 Intent intent = new Intent();
                                 intent.setClass(BeaconReceiver.getContext(), MainMenu.class);
-                                intent.putExtra("num", f.getPhoneNum().toString());
+//                                intent.putExtra("num", f.getPhoneNum().toString());
+                                intent.putExtra("num", f.getPhoneNum().getNum());
                                 /* TODO: si l'invitation contient un itineraire, l'ajouter dans l'intent. */
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                Log.d("DTRAX","Suppression d'une session existante  Session = " + Session.getInstance());
                                 Session.endInstance();
-                                BeaconReceiver.getContext().startActivity(intent);
-
-
                                 //on envoie une réponse oui
                                 Log.d("DTRAX", "Réponse envoyée " + String.format(Trax.MSG_ANSWER,"yes"));
                                 f.sendSMS(String.format(Trax.MSG_ANSWER,"yes"));
+
+
+                                Log.d("DTRAX","Lance MainMenu");
+                                BeaconReceiver.getContext().startActivity(intent);
 
                             }
                         }

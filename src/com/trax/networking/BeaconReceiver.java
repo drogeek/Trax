@@ -90,8 +90,6 @@ public class BeaconReceiver extends BroadcastReceiver {
             try{ verb = Trax.VERB.valueOf(str_verb);}
             catch(IllegalArgumentException e){ throw new ParseException("Unknown verb " + str_verb); }
 
-
-
             switch (verb) {
                 case INVITATION:
                     Log.d("DTRAX", "Invitation reçue de " + num);
@@ -121,10 +119,17 @@ public class BeaconReceiver extends BroadcastReceiver {
                     location.setAltitude(Location.convert(sc.next().replaceFirst(",", ".")));
 
                     //si on reçoit la position d'un follower qu'on a pas dans la liste, on lui demande de nous supprimer
-                    if(Session.getInstance() != null && Session.getInstance().getFollowers().containsKey(new PhoneNumber(num)))
+                    Log.d("DTRAX","Reçu d'une position");
+                    Log.d("DTRAX","Session = " + Session.getInstance());
+                    Log.d("DTRAX","Follower trouvé = " + Session.getInstance().getFollowers().containsKey(new PhoneNumber(num)));
+                    if(Session.getInstance() != null && Session.getInstance().getFollowers().containsKey(new PhoneNumber(num))) {
+                        Log.d("DTRAX","On bouge le follower");
                         Session.getInstance().moveFollower(num, location);
-                    else
+                    }
+                    else {
                         Follower.fromNum(num, getContext().getContentResolver()).sendSMS(Trax.MSG_DELETE);
+                        Log.d("DTRAX","On envoie un message de suppression car on ne l'a pas trouvé ou la session n'existe pas");
+                    }
 
                     break;
                 case POINTOFINTEREST:
@@ -136,7 +141,7 @@ public class BeaconReceiver extends BroadcastReceiver {
                 case DELETE:
                     Log.d("DTRAX", "Utilisateur distant vous a supprimé");
                     try {
-                        Session.getInstance().removeFollower(num);
+                        Session.getInstance().removeFollower(new PhoneNumber(num));
                     }
                     catch (NullPointerException osef){
                         Log.e("DTRAX","Reçu d'un delete inutile", osef);

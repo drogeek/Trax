@@ -22,6 +22,7 @@ public class MainMenu extends ActionBarActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("DTRAX","Création de MainMenu");
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
@@ -32,6 +33,7 @@ public class MainMenu extends ActionBarActivity {
 
         if(num != null){
             /* si on arrive ici par une invitation */
+            Log.d("DTRAX","par invitation");
             String itineraire = data.getString("url");
             try{
                 if(itineraire != null) {

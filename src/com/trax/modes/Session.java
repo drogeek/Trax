@@ -50,6 +50,7 @@ public abstract class Session {
     }
 
     public void addFollower(Follower f){
+        Log.d("DTRAX","Utilisateur ajouté aux followers");
         followers.put(f.getPhoneNum(),f);
     }
 
@@ -62,7 +63,8 @@ public abstract class Session {
             Log.d("DTRAX", "     " + key + " -> " + pendingFollowers.get(key));
 
         if(answer.equals("yes") && f != null)
-            followers.put(num, f);
+//            followers.put(num, f);
+            addFollower(f);
         /* TODO: error handling */
     }
 
@@ -99,7 +101,7 @@ public abstract class Session {
 
         f = pendingFollowers.remove(num);
         if(f != null){
-            f.sendSMS(Trax.MSG_DELETE);
+            //f.sendSMS(Trax.MSG_DELETE);
             f.deleteFollower(); // pour les observeurs du follower
 
             return;
