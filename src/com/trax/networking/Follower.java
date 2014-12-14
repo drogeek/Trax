@@ -12,12 +12,15 @@ import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.telephony.SmsManager;
 import android.util.Log;
+import com.google.android.gms.maps.model.LatLng;
 import com.trax.Trax;
+
+import java.util.Observable;
 
 /**
  * Created by unautre on 24/11/14.
  */
-public class Follower {
+public class Follower extends Observable {
     static String[] contact_projection = new String[]{
         Contacts.DISPLAY_NAME,
         Contacts.PHOTO_THUMBNAIL_URI,
@@ -26,7 +29,7 @@ public class Follower {
 
     private PhoneNumber num;
     private String name, couleur, picture;
-    private Location position;
+    private Location position = null;
 
     private Follower(){}
 
@@ -50,9 +53,15 @@ public class Follower {
         return picture;
     }
     public Location getLocation(){ return position; }
+    public LatLng getLatLng() { return new LatLng(position.getLatitude(),position.getLongitude());}
 
     //Setters
-    public void setLocation(Location l){ position = l; }
+    public void setLocation(Location l){
+        position = l;
+        setChanged();
+        notifyObservers(Trax.OBS_ACTIONS.MOVE);
+    }
+
     public void setName(String name){ this.name = name;}
 
     //methods
@@ -60,6 +69,11 @@ public class Follower {
         Context context = Trax.getContext();
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(Intent.ACTION_SENDTO), 0);
         SmsManager.getDefault().sendTextMessage(num.getNum(), null, msg, pendingIntent, pendingIntent);
+    }
+
+    public void deleteFollower(){
+        setChanged();
+        notifyObservers(Trax.OBS_ACTIONS.DELETE);
     }
 
     /* Factories */
@@ -83,12 +97,12 @@ public class Follower {
         return null;
     }
 
-    public static Follower fromUri(Uri data, ContentResolver contentResolver){
+    public static Follower fromUri(Uri data, ContentResolver contentResolver) {
         Follower follower = new Follower();
 
         Cursor cursor = contentResolver.query(data, contact_projection, null, null, null);
 
-        if(!cursor.moveToFirst()) return null;
+        if (!cursor.moveToFirst()) return null;
 
         follower.picture = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI));
         follower.name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME));

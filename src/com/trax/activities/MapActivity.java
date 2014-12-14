@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -17,17 +18,25 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.trax.R;
 import com.trax.Trax;
 import com.trax.modes.Session;
+import com.trax.networking.Follower;
 import com.trax.tools.ContactAdapter;
+
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by toor on 10/12/14.
  */
-public class MapActivity extends ActionBarActivity {
+public class MapActivity extends ActionBarActivity implements Observer {
 
     GoogleMap map;
+    Map<Follower,Marker> markers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +45,9 @@ public class MapActivity extends ActionBarActivity {
         setContentView(R.layout.map_layout);
         map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
         map.setMyLocationEnabled(true);
-
+        markers = new ArrayMap<Follower,Marker>();
+        for(Follower f : Session.getInstance().getFollowerList())
+            addObserver(f);
     }
 
 //Plus besoin, on garde la même instance à chaque fois youpie
@@ -103,5 +114,46 @@ public class MapActivity extends ActionBarActivity {
             AlertDialog dialog = alertDialog.create();
             dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             dialog.show();
+    }
+
+
+    //Ajout d'un marker sur la map correspondant au follower
+    public void addObserver(Follower f){
+        f.addObserver(this);
+
+    }
+
+    public void moveMarker(Follower f, LatLng loc){
+        markers.get(f).setPosition(loc);
+    }
+
+    public void rmMarker(Follower f){
+        if(markers.containsKey(f))
+            markers.remove(f).remove();
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        if(data instanceof Trax.OBS_ACTIONS){
+            switch((Trax.OBS_ACTIONS)data){
+                case MOVE:
+                    if(markers.containsKey((Follower)observable))
+                        moveMarker((Follower)observable,((Follower) observable).getLatLng());
+                    else
+                        markers.put((Follower)observable,map.addMarker(new MarkerOptions()
+                                .position(((Follower)observable).getLatLng())
+                                .title(((Follower) observable).getName()))
+                        );
+                    //TODO ajouter la couleur
+                break;
+
+                case DELETE:
+                    rmMarker((Follower)observable);
+                break;
+
+                default:
+                    Log.e("DTRAX","wtf?oO");
+            }
         }
+    }
 }

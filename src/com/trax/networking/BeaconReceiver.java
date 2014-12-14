@@ -90,13 +90,15 @@ public class BeaconReceiver extends BroadcastReceiver {
             try{ verb = Trax.VERB.valueOf(str_verb);}
             catch(IllegalArgumentException e){ throw new ParseException("Unknown verb " + str_verb); }
 
-            switch(verb){
+
+
+            switch (verb) {
                 case INVITATION:
-                    Log.d("DTRAX","Invitation reçue de "+num);
+                    Log.d("DTRAX", "Invitation reçue de " + num);
                     Follower f = Follower.fromNum(num, getContext().getContentResolver());
                     int beginURL = msg.indexOf("trax://");
                     String URL = null;
-                    if(beginURL != -1){
+                    if (beginURL != -1) {
                         int endURL = msg.indexOf(" ", beginURL);
                         URL = (endURL != -1) ?
                                 msg.substring(beginURL, endURL) :
@@ -112,10 +114,18 @@ public class BeaconReceiver extends BroadcastReceiver {
                     break;
                 case POSITION:
                     Location location = new Location("unknown"); // provider
-                    location.setLatitude(Location.convert(sc.next()));
-                    location.setLongitude(Location.convert(sc.next()));
-                    location.setAltitude(Location.convert(sc.next()));
-                    Session.getInstance().moveFollower(num, location);
+                    // c'est con, j'ai aucune idée de pourquoi étant donnée que c'est convert qui le fait, mais y'a une
+                    // virgule au lieu d'un point et du coup ca fait planter
+                    location.setLatitude(Location.convert(sc.next().replaceFirst(",", ".")));
+                    location.setLongitude(Location.convert(sc.next().replaceFirst(",", ".")));
+                    location.setAltitude(Location.convert(sc.next().replaceFirst(",", ".")));
+
+                    //si on reçoit la position d'un follower qu'on a pas dans la liste, on lui demande de nous supprimer
+                    if(Session.getInstance() != null && Session.getInstance().getFollowers().containsKey(new PhoneNumber(num)))
+                        Session.getInstance().moveFollower(num, location);
+                    else
+                        Follower.fromNum(num, getContext().getContentResolver()).sendSMS(Trax.MSG_DELETE);
+
                     break;
                 case POINTOFINTEREST:
                     /* TODO: rajouter un WayPoint/POI */
@@ -124,10 +134,16 @@ public class BeaconReceiver extends BroadcastReceiver {
                     /* TODO: afficher le message chat */
                     break;
                 case DELETE:
-                    Log.d("DTRAX","Utilisateur distant vous a supprimé");
-                    Session.getInstance().removeFollower(num);
+                    Log.d("DTRAX", "Utilisateur distant vous a supprimé");
+                    try {
+                        Session.getInstance().removeFollower(num);
+                    }
+                    catch (NullPointerException osef){
+                        Log.e("DTRAX","Reçu d'un delete inutile", osef);
+                    }
                 default:
                     throw new ParseException("Unknown verb " + str_verb);
+
             }
         }catch(ParseException e){
             Log.e("TRAX", "Parse Error: " + e.toString());

@@ -67,7 +67,8 @@ public abstract class Session {
     }
 
     public void moveFollower(String num, Location location){
-        followers.get(num).setLocation(location);
+
+        followers.get(new PhoneNumber(num)).setLocation(location); //ici le follower est pas trouvé si on cherche avec num
         /* TODO: error handling */
     }
 
@@ -99,18 +100,23 @@ public abstract class Session {
         f = pendingFollowers.remove(num);
         if(f != null){
             f.sendSMS(Trax.MSG_DELETE);
+            f.deleteFollower(); // pour les observeurs du follower
+
             return;
         }
 
         f = invitations.remove(num);
         if(f != null){
             f.sendSMS(String.format(Trax.MSG_ANSWER, "no"));
+            f.deleteFollower(); // pour les observeurs du follower
+
             return;
         }
 
-        followers.remove(num);
+        f = followers.remove(num);
         if(f != null){
             f.sendSMS(Trax.MSG_DELETE);
+            f.deleteFollower(); // pour les observeurs du follower
             return;
         }
     }

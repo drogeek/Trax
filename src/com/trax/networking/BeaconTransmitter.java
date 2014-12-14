@@ -50,14 +50,17 @@ public class BeaconTransmitter extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d("DTRAX","Position changée");
+        Log.d("DTRAX","Position changée et Session = " + Session.getInstance() + " FollowerList = " + Session.getInstance().getFollowerList());
         try {
             for (Follower f : Session.getInstance().getFollowerList()) {
-                f.sendSMS(String.format(Trax.MSG_POSITION,
-                        Location.convert(location.getLatitude(), Trax.COORDS_FORMAT),
-                        Location.convert(location.getLongitude(), Trax.COORDS_FORMAT),
-                        Location.convert(location.getAltitude(), Trax.COORDS_FORMAT)
-                ));
+                //on envoie un sms seulement si la position est différente
+                if(! (location.equals(f.getLocation())) ) {
+                    f.sendSMS(String.format(Trax.MSG_POSITION,
+                            Location.convert(location.getLatitude(), Trax.COORDS_FORMAT),
+                            Location.convert(location.getLongitude(), Trax.COORDS_FORMAT),
+                            Location.convert(location.getAltitude(), Trax.COORDS_FORMAT)
+                    ));
+                }
             }
             Session.getInstance().setOwnPosition(location);
         }catch(NullPointerException e){

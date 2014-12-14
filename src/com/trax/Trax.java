@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.WindowManager;
 import com.trax.activities.MainMenu;
+import com.trax.activities.MapActivity;
 import com.trax.modes.Session;
 import com.trax.networking.BeaconReceiver;
 import com.trax.networking.Follower;
@@ -23,6 +24,7 @@ public class Trax extends Application {
     public static int protocol_version = 1;
     public static String MSG_START = String.format("%s:%d:", base_name, protocol_version);
     public static enum VERB { INVITATION, ANSWER, POSITION, POINTOFINTEREST, CHAT, DELETE };
+    public static enum OBS_ACTIONS { MOVE, DELETE };
     public static String MSG_INVITATION = String.format("%s%s recue de l'application Trax (url) !", MSG_START, VERB.INVITATION);
     public static String MSG_ANSWER = MSG_START + VERB.ANSWER + " %s";
     public static String MSG_ITIN_INVITATION = MSG_INVITATION + " Cliquez ici une fois l'application installée: %s";
@@ -33,7 +35,7 @@ public class Trax extends Application {
     public static int COORDS_FORMAT = Location.FORMAT_SECONDS;
 
     public static long time_delta = 1000;//*60*5; // 5 minutes
-    public static long distance_delta = 1; // 20 metres
+    public static long distance_delta = 0; // 20 metres
 
     //Map
     public static double latitude, longitude;
