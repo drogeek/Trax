@@ -107,7 +107,6 @@ public class Trax extends Application {
 
                                 Log.d("DTRAX","Lance MainMenu");
                                 BeaconReceiver.getContext().startActivity(intent);
-
                             }
                         }
                 );
