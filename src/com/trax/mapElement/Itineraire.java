@@ -1,5 +1,6 @@
 package com.trax.mapElement;
 
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import com.google.android.gms.maps.model.LatLng;
@@ -12,6 +13,24 @@ import java.util.*;
  */
 public class Itineraire implements List<Location> {
     List<Location> self = new ArrayList<Location>();
+    private String nom;
+    private Bitmap image;
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
 
     public static Itineraire fromString(String s){
         /* TODO */
