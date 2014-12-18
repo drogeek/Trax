@@ -36,22 +36,17 @@ public class MainMenu extends ActionBarActivity {
             Log.d("DTRAX","par invitation");
             String itineraire = data.getString("url");
             try{
-                if(itineraire != null) {
-                    Log.d("DTRAX","SessionItinérant créée");
+                if(itineraire != null)
                     new SessionItinerant(itineraire);
-                }
-                else {
-                    Log.d("DTRAX","SessionEnregistrement créée");
+                else
                     new SessionEnregistrement();
-                }
             }catch(AlreadyLaunchedSessionException e){
-                Log.e("DTRAX", "WTF ? Session déjà lancée.");
+                Log.e("TRAX", "WTF ? Session déjà lancée.");
             }
             Session.getInstance().addFollower(Follower.fromNum(num, getContentResolver()));
             startActivity(new Intent(this, MapActivity.class));
         }else {
             setContentView(R.layout.main);
-            Log.d("DTRAX", "demande de lancement du BeaconReceiver");
         }
     }
 
@@ -78,8 +73,6 @@ public class MainMenu extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        Session.endInstance();
-//        Log.w("DTRAX", "Session supprimée dans MainMenu.onResume()");
     }
 
 }

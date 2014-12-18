@@ -1,6 +1,7 @@
 package com.trax.mapElement;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import com.google.android.gms.maps.model.LatLng;
@@ -47,6 +48,8 @@ public class Itineraire implements List<Location> {
         for(Location l: self){
             ret.add(new LatLng(l.getLatitude(), l.getLongitude()));
         }
+        ret.width(5);
+        ret.color(Color.RED); /* TODO: faire ca bien. */
         return ret;
     }
 

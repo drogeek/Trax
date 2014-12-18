@@ -48,6 +48,7 @@ public class MapActivity extends ActionBarActivity implements Observer {
         markers = new ArrayMap<Follower,Marker>();
         for(Follower f : Session.getInstance().getFollowerList())
             addObserver(f);
+        Session.getInstance().addObserver(this);
     }
 
 //Plus besoin, on garde la même instance à chaque fois youpie
@@ -149,6 +150,11 @@ public class MapActivity extends ActionBarActivity implements Observer {
 
                 case DELETE:
                     rmMarker((Follower)observable);
+                break;
+
+                case SELFMOVE:
+                    map.addPolyline(Session.getInstance().getItineraire().toMap());
+                    Log.d("DTRAX", "Devrait ajouter le PolyLine");
                 break;
 
                 default:

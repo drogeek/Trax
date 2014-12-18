@@ -24,7 +24,7 @@ public class Trax extends Application {
     public static int protocol_version = 1;
     public static String MSG_START = String.format("%s:%d:", base_name, protocol_version);
     public static enum VERB { INVITATION, ANSWER, POSITION, POINTOFINTEREST, CHAT, DELETE };
-    public static enum OBS_ACTIONS { MOVE, DELETE };
+    public static enum OBS_ACTIONS { MOVE, DELETE, SELFMOVE };
     public static String MSG_INVITATION = String.format("%s%s recue de l'application Trax (url) !", MSG_START, VERB.INVITATION);
     public static String MSG_ANSWER = MSG_START + VERB.ANSWER + " %s";
     public static String MSG_ITIN_INVITATION = MSG_INVITATION + " Cliquez ici une fois l'application installée: %s";

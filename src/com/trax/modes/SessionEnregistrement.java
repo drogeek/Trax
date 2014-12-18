@@ -1,5 +1,7 @@
 package com.trax.modes;
 
+import android.location.Location;
+import android.util.Log;
 import com.trax.errors.AlreadyLaunchedSessionException;
 
 /**
@@ -8,5 +10,12 @@ import com.trax.errors.AlreadyLaunchedSessionException;
 public class SessionEnregistrement extends Session {
     public SessionEnregistrement() throws AlreadyLaunchedSessionException {
         super();
+    }
+
+    @Override
+    public void setOwnPosition(Location l) {
+        getItineraire().add(l);
+        super.setOwnPosition(l);
+        Log.d("DTRAX", "Position changée, devrait changer l'itineraire.");
     }
 }

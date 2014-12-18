@@ -24,7 +24,7 @@ public class BeaconTransmitter extends Service implements LocationListener {
         Log.d("DTRAX", "Service BeaconTransmitter lancé.");
         lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, Trax.time_delta, Trax.distance_delta, this);
-        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Trax.time_delta, Trax.distance_delta, this);
+        //lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Trax.time_delta, Trax.distance_delta, this);
 
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if(location == null)

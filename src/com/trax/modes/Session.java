@@ -5,20 +5,29 @@ import android.location.Location;
 import android.util.Log;
 import com.trax.Trax;
 import com.trax.errors.AlreadyLaunchedSessionException;
+import com.trax.mapElement.Itineraire;
 import com.trax.networking.BeaconTransmitter;
 import com.trax.networking.Follower;
 import com.trax.networking.PhoneNumber;
 import com.trax.tools.ObservableTable;
 
 import java.util.Collection;
+import java.util.Observable;
 
 /**
  * Created by unautre on 23/11/14.
  */
-public abstract class Session {
+public abstract class Session extends Observable {
     protected Session() throws AlreadyLaunchedSessionException {
         setInstance(this);
+        Log.w("DTRAX", "Session crée");
         Trax.getApplication().startService(new Intent(Trax.getContext(), BeaconTransmitter.class));
+    }
+
+    private Itineraire itineraire = new Itineraire();
+
+    public Itineraire getItineraire() {
+        return itineraire;
     }
 
     private ObservableTable<PhoneNumber, Follower> pendingFollowers = new ObservableTable<PhoneNumber, Follower>();
@@ -86,7 +95,10 @@ public abstract class Session {
         Session.instance = instance;
     }
 
-    public void setOwnPosition(Location l){}
+    public void setOwnPosition(Location l){
+        setChanged();
+        notifyObservers(Trax.OBS_ACTIONS.SELFMOVE);
+    }
 
     public void removeFollower(Follower f){
         removeFollower(f.getPhoneNum());
