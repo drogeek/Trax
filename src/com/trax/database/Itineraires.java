@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class Itineraires extends SQLiteOpenHelper {
 
     private static String DATABASE_NAME = "Itineraires";
+    private static String ITINERAIRE_NAME = "Itineraires";
+    private static String POINT_NAME = "Points";
     private static int DATABASE_VERSION = 2;
 
     //column
@@ -17,9 +19,17 @@ public class Itineraires extends SQLiteOpenHelper {
     private static final String COLUMN_IMAGE = "image";
     private static final String COLUMN_NAME = "name";
 
-    private static String DATABASE_CREATE = "create table " + DATABASE_NAME + "(" +
+    private static final String COLUMN_LAT = "latitude";
+    private static final String COLUMN_LNG = "longitude";
+    private static final String COLUMN_ITI = "itineraire";
+
+    private static String CREATE_ITINERAIRE = "create table " + ITINERAIRE_NAME + "(" +
             COLUMN_ID + " integer primary key autoincrement, " + COLUMN_NAME + "text, "
             + COLUMN_IMAGE + " blob);";
+    private static String CREATE_POINTS = "create table " + POINT_NAME + "(" +
+            COLUMN_ID + " sqltime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, " + COLUMN_LAT + "REAL, "
+            + COLUMN_LNG + "REAL," + " PRIMARY KEY (" + COLUMN_ID + ", " + COLUMN_ITI + ")" + " FOREIGN KEY( "
+            + COLUMN_ID + ") REFERENCES " + ITINERAIRE_NAME + "( " + COLUMN_ID + ");";
 
     //constructeur
     Itineraires(Context context){
@@ -29,7 +39,8 @@ public class Itineraires extends SQLiteOpenHelper {
     //appelé à chaque fois que l'on recrée la BDD
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DATABASE_CREATE);
+        db.execSQL(CREATE_ITINERAIRE);
+        db.execSQL(CREATE_POINTS);
     }
 
     @Override
