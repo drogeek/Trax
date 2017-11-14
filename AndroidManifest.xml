@@ -28,7 +28,6 @@
         <activity android:name=".activities.MainMenu"
                   android:theme="@style/Theme.AppCompat.Light"
                   android:label="@string/app_name"
-                  android:launchMode="singleInstance"
                   android:finishOnTaskLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
